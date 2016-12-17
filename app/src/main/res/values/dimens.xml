@@ -65,4 +65,8 @@
     <dimen name="ldrawer_thickness">2dp</dimen>
     <dimen name="ldrawer_gapBetweenBars">3dp</dimen>
     <dimen name="ldrawer_middleBarArrowSize">16dp</dimen>
+
+    <dimen name="corner_radius">2dp</dimen>
+    <dimen name="layer_padding">3dp</dimen>
+    <dimen name="size_default_height">160dp</dimen>
 </resources>

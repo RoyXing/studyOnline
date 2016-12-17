@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.design.studyonline.R;
@@ -16,6 +15,7 @@ import com.design.studyonline.fragment.CommunicationFragment;
 import com.design.studyonline.fragment.ResourceFragment;
 import com.design.studyonline.fragment.StudyFragment;
 import com.design.studyonline.utils.FragmentController;
+import com.design.studyonline.view.TitleView;
 import com.design.studyonline.view.bottomnavigation.BottomNavigationBar;
 import com.design.studyonline.view.bottomnavigation.BottomNavigationItem;
 
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     private BottomNavigationBar bottomNavigationBar;
     private FragmentController mController;
-    private Toolbar toolbar;
+    private TitleView toolbar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     private void initView() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (TitleView) findViewById(R.id.toolbar);
         drawerLayout = ((DrawerLayout) findViewById(R.id.drawer_layout));
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
     }
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     private void initSlide() {
         setSupportActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.app_name));
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawerLayout.setScrimColor(Color.parseColor("#66000000"));
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mController!=null){
+        if (mController != null) {
             mController.onDestroy();
         }
     }
