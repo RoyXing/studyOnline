@@ -1,0 +1,40 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="BadgeText" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:textSize">@dimen/badge_text_size</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:layout_marginTop">@dimen/badge_top_margin</item>
+        <item name="android:paddingRight">@dimen/badge_width_padding</item>
+        <item name="android:paddingLeft">@dimen/badge_width_padding</item>
+        <item name="android:paddingBottom">@dimen/badge_height_padding</item>
+        <item name="android:paddingTop">@dimen/badge_height_padding</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+
+    <declare-styleable name="MaterialMenuView">
+        <attr name="mm_color" format="color"/>
+        <attr name="mm_visible" format="boolean"/>
+        <attr name="mm_scale" format="integer"/>
+        <attr name="mm_transformDuration" format="integer"/>
+        <attr name="mm_strokeWidth" format="integer"/>
+        <attr name="mm_rtlEnabled" format="boolean"/>
+        <attr name="mm_iconState" format="enum">
+            <enum name="burger" value="0" />
+            <enum name="arrow" value="1" />
+            <enum name="x" value="2" />
+            <enum name="check" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>

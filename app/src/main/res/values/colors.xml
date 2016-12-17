@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="tabbar_top_divider">#e0e0e0</color>
+    <color name="base_tabbar_bgcolor">#FBF6F3</color>
+    <color name="main_color">#F44336</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent_20">#33000000</color>
+    <color name="transparent_30">#4D000000</color>
+    <color name="transparent_40">#40000000</color>
+    <color name="transparent_50">#80000000</color>
+    <color name="transparent_60">#A6000000</color>
+    <color name="transparent_80">#CC000000</color>
+    <color name="transparentw_20">#33ffffff</color>
+    <color name="transparentw_30">#4Dffffff</color>
+    <color name="transparentw_40">#40ffffff</color>
+    <color name="transparentw_50">#80ffffff</color>
+    <color name="transparentw_60">#A6ffffff</color>
+    <color name="transparentw_80">#CCffffff</color>
+
+    <color name="base_toolbar_bgcolor">#3A5FCD</color>
+    <color name="base_toolbar_bccolor">#3A5FCD</color>
+    <color name="red">#FF0000</color>
+    <color name="color_normal_divider">#e0e0e0</color>
+    <color name="app_484b50_color">#484b50</color>
+    <color name="app_e5e5e5_color">#e5e5e5</color>
+    <color name="color_383d48">#383d48</color>
+    <color name="common_division_color">#e3e8ec</color>
+    <color name="app_b3ffffff_color">#b3ffffff</color>
+    <drawable name="drawable_color_dddddd">#dddddd</drawable>
+
+    <!-- Upgrade Dialog -->
+    <color name="upgrade_dialog_divider">#b2b2b2</color>
+    <color name="color_white">#FFFFFF</color>
+    <!--5 牡丹红 #FF00FF-->
+    <color name="color_FF00FF">#FF00FF</color>
+    <!--6 青色 #00FFFF-->
+    <color name="color_00FFFF">#00FFFF</color>
+    <!--7 黄色 #FFFF00-->
+    <color name="color_FFFF00">#FFFF00</color>
+    <!--9 海蓝 #70DB93-->
+    <color name="color_70DB93">#70DB93</color>
+    <!--10 巧克力色 #5C3317-->
+    <color name="color_5C3317">#5C3317</color>
+    <!--11 蓝紫色 #9F5F9F-->
+    <color name="color_9F5F9F">#9F5F9F</color>
+    <!--12 黄铜色 #B5A642-->
+    <color name="color_B5A642">#B5A642</color>
+    <!--13 亮金色 #D9D919-->
+    <color name="color_D9D919">#D9D919</color>
+    <!--14 棕色 #A67D3D-->
+    <color name="color_A67D3D">#A67D3D</color>
+    <!--15 青铜色 #8C7853-->
+    <color name="color_8C7853">#8C7853</color>
+    <!--17 士官服蓝色 #5F9F9F-->
+    <color name="color_5F9F9F">#5F9F9F</color>
+    <!--18 冷铜色 #D98719-->
+    <color name="color_D98719">#D98719</color>
+    <!--19 铜色 #B87333-->
+    <color name="color_B87333">#B87333</color>
+    <!--20 珊瑚红 #FF7F00-->
+    <color name="color_FF7F00">#FF7F00</color>
+    <!--21 紫蓝色 #42426F-->
+    <color name="color_42426F">#42426F</color>
+    <!--22 深棕 #5C4033-->
+    <color name="color_5C4033">#5C4033</color>
+    <!--23 深绿 #2F4F2F-->
+    <color name="color_2F4F2F">#2F4F2F</color>
+    <!--24 深铜绿色 #4A766E-->
+    <color name="color_4A766E">#4A766E</color>
+    <!--25 深橄榄绿 #4F4F2F-->
+    <color name="color_4F4F2F">#4F4F2F</color>
+    <!--26 深兰花色 #9932CD-->
+    <color name="color_9932CD">#9932CD</color>
+    <!--27 深紫色 #871F78-->
+    <color name="color_871F78">#871F78</color>
+    <!--28 深石板蓝 #6B238E-->
+    <color name="color_6B238E">#6B238E</color>
+    <!--30 深棕褐色 #97694F-->
+    <color name="color_97694F">#97694F</color>
+    <!--32 深绿松石色 #7093DB-->
+    <color name="color_7093DB">#7093DB</color>
+    <!--33 暗木色 #855E42-->
+    <color name="color_855E42">#855E42</color>
+    <!--35 土灰玫瑰红色 #856363-->
+    <color name="color_856363">#856363</color>
+    <!--36 长石色 #D19275-->
+    <color name="color_D19275">#D19275</color>
+    <!--37 火砖色 #8E2323-->
+    <color name="color_8E2323">#8E2323</color>
+    <!--38 森林绿 #238E23-->
+    <color name="color_238E23">#238E23</color>
+    <!--39 金色 #CD7F32-->
+    <color name="color_CD7F32">#CD7F32</color>
+    <!--40 鲜黄色 #DBDB70-->
+    <color name="color_DBDB70">#DBDB70</color>
+    <!--41 灰色 #C0C0C0-->
+    <color name="color_C0C0C0">#C0C0C0</color>
+    <!--42 铜绿色 #527F76-->
+    <color name="color_527F76">#527F76</color>
+    <!--43 青黄色 #93DB70-->
+    <color name="color_93DB70">#93DB70</color>
+    <!--44 猎人绿 #215E21-->
+    <color name="color_215E21">#215E21</color>
+    <!--45 印度红 #4E2F2F-->
+    <color name="color_4E2F2F">#4E2F2F</color>
+    <!--46 土黄色 #9F9F5F-->
+    <color name="color_9F9F5F">#9F9F5F</color>
+    <!--47 浅蓝色 #C0D9D9-->
+    <color name="color_C0D9D9">#C0D9D9</color>
+    <!--48 浅灰色 #A8A8A8-->
+    <color name="color_A8A8A8">#A8A8A8</color>
+    <!--49 浅钢蓝色 #8F8FBD-->
+    <color name="color_8F8FBD">#8F8FBD</color>
+    <!--59 浅木色 #E9C2A6-->
+    <color name="color_E9C2A6">#E9C2A6</color>
+    <!--60 石灰绿色 #32CD32-->
+    <color name="color_32CD32">#32CD32</color>
+    <!--61 桔黄色 #E47833-->
+    <color name="color_E47833">#E47833</color>
+    <!--62 褐红色 #8E236B-->
+    <color name="color_8E236B">#8E236B</color>
+    <!--63 中海蓝色 #32CD99-->
+    <color name="color_32CD99">#32CD99</color>
+    <!--64 中蓝色 #3232CD-->
+    <color name="color_3232CD">#3232CD</color>
+    <!--65 中森林绿 #6B8E23-->
+    <color name="color_6B8E23">#6B8E23</color>
+    <!--66 中鲜黄色 #EAEAAE-->
+    <color name="color_EAEAAE">#EAEAAE</color>
+    <!--67 中兰花色 #9370DB-->
+    <color name="color_9370DB">#9370DB</color>
+    <!--68 中海绿色 #426F42-->
+    <color name="color_426F42">#426F42</color>
+    <!--69 中石板蓝色 #7F00FF-->
+    <color name="color_7F00FF">#7F00FF</color>
+    <!--70 中春绿色 #7FFF00-->
+    <color name="color_7FFF00">#7FFF00</color>
+    <!--71 中绿松石色 #70DBDB-->
+    <color name="color_70DBDB">#70DBDB</color>
+    <!--72 中紫红色 #DB7093-->
+    <color name="color_DB7093">#DB7093</color>
+    <!--73 中木色 #A68064-->
+    <color name="color_A68064">#A68064</color>
+    <!--74 深藏青色 #2F2F4F-->
+    <color name="color_2F2F4F">#2F2F4F</color>
+    <!--75 海军蓝 #23238E-->
+    <color name="color_23238E">#23238E</color>
+    <!--76 霓虹篮 #4D4DFF-->
+    <color name="color_4D4DFF">#4D4DFF</color>
+    <!--77 霓虹粉红 #FF6EC7-->
+    <color name="color_FF6EC7">#FF6EC7</color>
+    <!--78 新深藏青色 #00009C-->
+    <color name="color_00009C">#00009C</color>
+    <!--79 新棕褐色 #EBC79E-->
+    <color name="color_EBC79E">#EBC79E</color>
+    <!--80 暗金黄色 #CFB53B-->
+    <color name="color_CFB53B">#CFB53B</color>
+    <!--webview进度条颜色-->
+    <color name="webview_pbar">#0000ff</color>
+    <color name="ldrawer_color">#FFFFFF</color>
+    <color name="actionbar_color">#bf360c</color>
+    <color name="drawer_arrow_second_color">#303f9f</color>
+</resources>
