@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by roy on 2016/12/16.
+ * the data of app bottom
  */
 
 public class BottomData {

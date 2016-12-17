@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         setContentView(R.layout.activity_main);
 
         initView();
-        initTitle();
+        initSlide();
         initEvent();
     }
 
@@ -50,13 +50,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
 
-    private void initTitle() {
+    private void initSlide() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         drawerLayout.setScrimColor(Color.parseColor("#66000000"));
-
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -70,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         };
         mDrawerToggle.syncState();
         drawerLayout.setDrawerListener(mDrawerToggle);
-
     }
 
     private void initEvent() {

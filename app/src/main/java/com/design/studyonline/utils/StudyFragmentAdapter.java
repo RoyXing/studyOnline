@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StudyFragmentAdapter extends FragmentPagerAdapter {
 
-    private List<Fragment> mFragmentList;                         //fragment列表
+    private List<Fragment> mFragmentList;
     private List<String> mList;
 
     public StudyFragmentAdapter(FragmentManager fm, List<Fragment> fragmentList, List<String> title) {
