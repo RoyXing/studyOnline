@@ -47,7 +47,7 @@
 
     </LinearLayout>
 
-    <com.design.studyonline.view.button.ActionProcessButton
+    <com.study.online.view.button.ActionProcessButton
         android:id="@+id/btnSignIn"
         android:layout_width="match_parent"
         android:layout_height="48dp"

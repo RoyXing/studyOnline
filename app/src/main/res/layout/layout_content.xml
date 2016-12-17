@@ -23,7 +23,7 @@
             android:background="@color/tabbar_top_divider"/>
 
 
-        <com.design.studyonline.view.bottomnavigation.BottomNavigationBar
+        <com.study.online.view.bottomnavigation.BottomNavigationBar
             android:id="@+id/bottom_navigation_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
 
         <fragment
             android:id="@+id/slide_fragment"
-            android:name="com.design.studyonline.fragment.SlideFragment"
+            android:name="com.study.online.fragment.SlideFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="start"/>
