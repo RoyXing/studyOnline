@@ -62,7 +62,7 @@
         custom:pb_colorNormal="@color/blue_normal"
         custom:pb_colorPressed="@color/blue_pressed"
         custom:pb_colorProgress="@color/purple_progress"
-        custom:pb_textComplete="login success"
-        custom:pb_textProgress="Loading"/>
+        custom:pb_textComplete="登录成功"
+        custom:pb_textProgress="登录中..."/>
 
 </LinearLayout>
