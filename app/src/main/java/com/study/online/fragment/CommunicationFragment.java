@@ -1,5 +1,6 @@
 package com.study.online.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,8 +14,14 @@ import android.widget.Toast;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.study.online.R;
+import com.study.online.activity.CommunicationDatialsActivity;
 import com.study.online.adapter.CommunicationAdapter;
 import com.study.online.bean.CommunicationBean;
+import com.study.online.eventbusbean.CommunicationEventBean;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +77,7 @@ public class CommunicationFragment extends BaseFragment {
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(getContext(),"刷新了",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"刷新了",Toast.LENGTH_SHORT).show();
                 refreshLayout.setRefreshing(false);
             }
         });
@@ -78,7 +85,7 @@ public class CommunicationFragment extends BaseFragment {
         footview.findViewById(R.id.cardview_foot).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"加载下一页数据",Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),"加载下一页数据",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -80,4 +80,18 @@ public class CommunicationBean implements Serializable {
     public void setCommit(String commit) {
         this.commit = commit;
     }
+
+    @Override
+    public String toString() {
+        return "CommunicationBean{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", headurl='" + headurl + '\'' +
+                ", userName='" + userName + '\'' +
+                ", time='" + time + '\'' +
+                ", commit='" + commit + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

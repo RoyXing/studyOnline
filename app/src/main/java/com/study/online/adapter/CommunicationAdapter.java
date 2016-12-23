@@ -1,20 +1,24 @@
 package com.study.online.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.study.online.R;
+import com.study.online.activity.CommunicationDatialsActivity;
 import com.study.online.bean.CommunicationBean;
+import com.study.online.eventbusbean.CommunicationEventBean;
 import com.study.online.view.RoundImageView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -63,7 +67,10 @@ public class CommunicationAdapter extends ArrayAdapter<CommunicationBean> {
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"刷新了"+position,Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"刷新了"+position,Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(context, CommunicationDatialsActivity.class);
+                context.startActivity(intent);
+                EventBus.getDefault().postSticky(new CommunicationEventBean(list.get(position)));
 
             }
         });
