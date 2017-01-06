@@ -20,7 +20,7 @@ import com.study.online.R;
 
 public class TitleView extends Toolbar {
 
-    ImageView leftImage;
+    ImageView leftImage, rightImage;
     TextView title;
     View view;
 
@@ -44,6 +44,7 @@ public class TitleView extends Toolbar {
         setContentInsetsRelative(10, 10);
         view = LayoutInflater.from(context).inflate(R.layout.layout_title, null);
         leftImage = (ImageView) view.findViewById(R.id.title_back);
+        rightImage = (ImageView) view.findViewById(R.id.title_right);
         title = (TextView) view.findViewById(R.id.title_title);
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
         addView(view, lp);
@@ -65,8 +66,16 @@ public class TitleView extends Toolbar {
         leftImage.setImageResource(image);
     }
 
+    public void setRightImage(int image) {
+        this.rightImage.setImageResource(image);
+    }
+
     public void setLeftImageOnClickListener(OnClickListener onClickListener) {
         leftImage.setOnClickListener(onClickListener);
+    }
+
+    public void setRightImageOnClickListener(OnClickListener onClickListener) {
+        rightImage.setOnClickListener(onClickListener);
     }
 
     public void isShowLeftImage(boolean isShow) {
@@ -76,5 +85,12 @@ public class TitleView extends Toolbar {
             leftImage.setVisibility(View.GONE);
     }
 
+    public void isShowRightImage(boolean isShow) {
+        if (isShow) {
+            rightImage.setVisibility(View.VISIBLE);
+        } else {
+            rightImage.setVisibility(View.GONE);
+        }
+    }
 
 }

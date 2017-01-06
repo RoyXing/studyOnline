@@ -22,7 +22,9 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".activity.CommunicationDatialsActivity"/>
+        <activity android:name=".activity.CommunicationDatialsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".activity.WriteCommunicationActivity"/>
     </application>
 
 </manifest>

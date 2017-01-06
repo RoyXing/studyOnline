@@ -27,7 +27,7 @@
             android:drawablePadding="5dp"
             android:hint="账号："
             android:inputType="textEmailAddress"
-            android:text="roy"/>
+            android:text="15136102501"/>
 
         <View
             android:layout_width="match_parent"

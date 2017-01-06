@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/title_toolbar" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:text="主题"/>
+            <EditText
+                android:id="@+id/ed_title"
+                style="@style/communication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="15"
+                android:visibility="gone"
+                android:text="11"
+                android:hint="请输入主题,不超过15字哦"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="内容"/>
+            <EditText
+                android:id="@+id/ed_content"
+                style="@style/communication"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="300dp"
+                android:gravity="top"
+                android:hint="请输入内容，不超过500字哦"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

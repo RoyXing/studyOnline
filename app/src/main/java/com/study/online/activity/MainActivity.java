@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

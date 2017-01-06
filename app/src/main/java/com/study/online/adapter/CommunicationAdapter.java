@@ -9,13 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.study.online.R;
 import com.study.online.activity.CommunicationDatialsActivity;
-import com.study.online.bean.CommunicationBean;
+import com.study.online.bean.TopicBean;
 import com.study.online.eventbusbean.CommunicationEventBean;
+import com.study.online.utils.TimeUtils;
 import com.study.online.view.RoundImageView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,10 +26,10 @@ import java.util.List;
  * Created by roy on 2016/12/21.
  */
 
-public class CommunicationAdapter extends ArrayAdapter<CommunicationBean> {
+public class CommunicationAdapter extends ArrayAdapter<TopicBean> {
     private Context context;
-    private List<CommunicationBean>list;
-    public CommunicationAdapter(Context context, int resource, List<CommunicationBean> objects) {
+    private List<TopicBean>list;
+    public CommunicationAdapter(Context context, int resource, List<TopicBean> objects) {
         super(context, resource, objects);
         this.context=context;
         this.list=objects;
@@ -59,18 +59,18 @@ public class CommunicationAdapter extends ArrayAdapter<CommunicationBean> {
             holder=(CommunicationHolder) convertView.getTag();
         }
         holder.userName.setText(list.get(position).getUserName());
-        holder.articleTitle.setText(list.get(position).getTitle());
+        //holder.articleTitle.setText(list.get(position).getTitle());
+        holder.articleTitle.setVisibility(View.GONE);
         holder.articleContent.setText(list.get(position).getContent());
-        holder.articleCommit.setText(list.get(position).getCommit());
-        holder.articleTime.setText(list.get(position).getTime());
-        Picasso.with(context).load(list.get(position).getHeadurl()).into(holder.userImg);
+        holder.articleCommit.setText("评论数："+list.get(position).getCommentNum());
+        holder.articleTime.setText(TimeUtils.longToString(list.get(position).getCreateTime())+"");
+        Picasso.with(context).load(list.get(position).getIcon()).into(holder.userImg);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"刷新了"+position,Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(context, CommunicationDatialsActivity.class);
                 context.startActivity(intent);
-                EventBus.getDefault().postSticky(new CommunicationEventBean(list.get(position)));
+                EventBus.getDefault().postSticky(new CommunicationEventBean(list.get(position),"activity"));
 
             }
         });

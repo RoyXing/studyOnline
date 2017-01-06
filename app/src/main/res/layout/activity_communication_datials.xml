@@ -2,15 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <include layout="@layout/title_toolbar"/>
-    <TextView
-        android:id="@+id/content"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/title_toolbar" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:padding="10dp"/>
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_communication" />
+
+            <com.study.online.view.ExpandListview
+                android:id="@+id/exlistview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="#33000000"
+                android:dividerHeight="0.5dp"></com.study.online.view.ExpandListview>
+        </LinearLayout>
+    </ScrollView>
+    <include layout="@layout/foot_commit"
+        />
 </LinearLayout>
