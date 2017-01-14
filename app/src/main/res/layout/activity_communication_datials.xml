@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <include layout="@layout/title_toolbar" />
 
@@ -24,10 +23,13 @@
                 android:id="@+id/exlistview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:divider="#33000000"
-                android:dividerHeight="0.5dp"></com.study.online.view.ExpandListview>
+                android:dividerHeight="0.5dp" />
+
         </LinearLayout>
     </ScrollView>
-    <include layout="@layout/foot_commit"
-        />
+
+    <include layout="@layout/foot_commit" />
+
 </LinearLayout>

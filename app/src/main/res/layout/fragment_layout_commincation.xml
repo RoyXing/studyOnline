@@ -7,7 +7,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
 
         <ListView
             android:id="@+id/listview_communitcation"
@@ -15,20 +16,26 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:divider="#00000000"
-            android:dividerHeight="5dp" />
+            android:dividerHeight="5dp"
+            android:scrollbars="none" />
+
     </android.support.v4.widget.SwipeRefreshLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/img_write"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="30dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/write"/>
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/write" />
     </RelativeLayout>
+
 </FrameLayout>

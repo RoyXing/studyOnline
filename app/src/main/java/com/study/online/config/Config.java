@@ -16,14 +16,16 @@ public class Config {
     public static String LOGIN = URL + "/user/login";
 
     //话题列表
-    public static String TOPIC_LIST=URL+"/topic/list";
+    public static String TOPIC_LIST = URL + "/topic/list";
 
     //话题详情+ID
-    public static String TOPIC=URL+"/topic/";
+    public static String TOPIC = URL + "/topic/";
 
     //增加话题
-    public static String ADD_TOPIC=URL+"/topic/add";
+    public static String ADD_TOPIC = URL + "/topic/add";
 
     //话题评论
-    public static String ADD_COMMINT_TOPIC=URL+"/comment/add";
+    public static String ADD_COMMENT_TOPIC = URL + "/comment/add";
+
+    public static String COURSE_LIST = URL + "/course/list";
 }

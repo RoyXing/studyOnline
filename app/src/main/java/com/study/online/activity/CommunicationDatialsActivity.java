@@ -233,7 +233,7 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
         dialogView.setMessage("评论发送中...");
         OkHttpUtils
                 .post()
-                .url(Config.ADD_COMMINT_TOPIC)
+                .url(Config.ADD_COMMENT_TOPIC)
                 .addParams("parentId", topicBean.getParentId())
                 .addParams("content", topicBean.getContent())
                 .addParams("topicId", topicBean.getTopicId())
@@ -249,7 +249,7 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
 
                     @Override
                     public void onResponse(String response, int id) {
-                        JsonResult<String> result = new JsonResult<String>();
+                        JsonResult<String> result;
                         try {
                             result = JsonUtils.getObject(response, new TypeToken<JsonResult<String>>() {
                             }.getType());
@@ -267,7 +267,6 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
                         }
                         if (dialogView != null)
                             dialogView.close();
-
                     }
 
                 });

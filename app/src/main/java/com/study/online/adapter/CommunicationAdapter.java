@@ -28,11 +28,12 @@ import java.util.List;
 
 public class CommunicationAdapter extends ArrayAdapter<TopicBean> {
     private Context context;
-    private List<TopicBean>list;
+    private List<TopicBean> list;
+
     public CommunicationAdapter(Context context, int resource, List<TopicBean> objects) {
         super(context, resource, objects);
-        this.context=context;
-        this.list=objects;
+        this.context = context;
+        this.list = objects;
     }
 
     @Override
@@ -44,41 +45,42 @@ public class CommunicationAdapter extends ArrayAdapter<TopicBean> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         CommunicationHolder holder;
-        if (convertView==null){
-            holder=new CommunicationHolder();
-            convertView= LayoutInflater.from(context).inflate(R.layout.item_communication,null);
-            holder.articleCommit=(TextView) convertView.findViewById(R.id.article_commit);
-            holder.articleTitle=(TextView) convertView.findViewById(R.id.article_title);
-            holder.articleContent=(TextView) convertView.findViewById(R.id.article_content);
-            holder.userName=(TextView) convertView.findViewById(R.id.username);
-            holder.articleTime=(TextView) convertView.findViewById(R.id.article_time);
-            holder.cardView=(CardView) convertView.findViewById(R.id.cardview);
-            holder.userImg=(RoundImageView) convertView.findViewById(R.id.userimg);
+        if (convertView == null) {
+            holder = new CommunicationHolder();
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_communication, null);
+            holder.articleCommit = (TextView) convertView.findViewById(R.id.article_commit);
+            holder.articleTitle = (TextView) convertView.findViewById(R.id.article_title);
+            holder.articleContent = (TextView) convertView.findViewById(R.id.article_content);
+            holder.userName = (TextView) convertView.findViewById(R.id.username);
+            holder.articleTime = (TextView) convertView.findViewById(R.id.article_time);
+            holder.cardView = (CardView) convertView.findViewById(R.id.cardview);
+            holder.userImg = (RoundImageView) convertView.findViewById(R.id.userimg);
             convertView.setTag(holder);
-        }else {
-            holder=(CommunicationHolder) convertView.getTag();
+        } else {
+            holder = (CommunicationHolder) convertView.getTag();
         }
         holder.userName.setText(list.get(position).getUserName());
         //holder.articleTitle.setText(list.get(position).getTitle());
         holder.articleTitle.setVisibility(View.GONE);
         holder.articleContent.setText(list.get(position).getContent());
-        holder.articleCommit.setText("评论数："+list.get(position).getCommentNum());
-        holder.articleTime.setText(TimeUtils.longToString(list.get(position).getCreateTime())+"");
+        holder.articleCommit.setText("评论数：" + list.get(position).getCommentNum());
+        holder.articleTime.setText(TimeUtils.longToString(list.get(position).getCreateTime()) + "");
         Picasso.with(context).load(list.get(position).getIcon()).into(holder.userImg);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(context, CommunicationDatialsActivity.class);
+                Intent intent = new Intent(context, CommunicationDatialsActivity.class);
                 context.startActivity(intent);
-                EventBus.getDefault().postSticky(new CommunicationEventBean(list.get(position),"activity"));
+                EventBus.getDefault().postSticky(new CommunicationEventBean(list.get(position), "activity"));
 
             }
         });
         return convertView;
     }
-    class CommunicationHolder{
+
+    class CommunicationHolder {
         RoundImageView userImg;
-        TextView userName,articleTitle,articleContent,articleCommit,articleTime;
+        TextView userName, articleTitle, articleContent, articleCommit, articleTime;
         CardView cardView;
     }
 }
