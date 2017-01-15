@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.study.online">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    package="com.study.online">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -14,17 +16,22 @@
             android:name=".activity.LoginActivity"
             android:launchMode="singleTask">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".activity.CommunicationDatialsActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".activity.WriteCommunicationActivity"/>
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".activity.CommunicationDatialsActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".activity.WriteCommunicationActivity" />
+
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>

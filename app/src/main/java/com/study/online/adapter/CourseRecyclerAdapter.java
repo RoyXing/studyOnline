@@ -39,9 +39,9 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         Picasso.with(mContext).load(getBean(position).getImages()).into(holder.course_pic);
-        holder.course_name.setText("名称：" + getBean(position).getName());
+        holder.course_name.setText("名 称：" + getBean(position).getName());
         holder.course_author.setText("作 者：" + getBean(position).getAuthor());
-        holder.course_publishing.setText("产商：" + getBean(position).getPublishing());
+        holder.course_publishing.setText("产 商：" + getBean(position).getPublishing());
         holder.course_desc.setText("描 述：" + getBean(position).getDesc());
     }
 

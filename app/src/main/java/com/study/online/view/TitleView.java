@@ -23,6 +23,7 @@ public class TitleView extends Toolbar {
     ImageView leftImage, rightImage;
     TextView title;
     View view;
+    TextView rightText;
 
     public TitleView(Context context) {
         super(context);
@@ -46,8 +47,15 @@ public class TitleView extends Toolbar {
         leftImage = (ImageView) view.findViewById(R.id.title_back);
         rightImage = (ImageView) view.findViewById(R.id.title_right);
         title = (TextView) view.findViewById(R.id.title_title);
+        rightText = (TextView) view.findViewById(R.id.title_right_text);
         LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER);
         addView(view, lp);
+    }
+
+    public void setRightText(String s) {
+        if (rightText != null) {
+            rightText.setText(s);
+        }
     }
 
     public void setCustomTitle(String s) {
@@ -78,6 +86,10 @@ public class TitleView extends Toolbar {
         rightImage.setOnClickListener(onClickListener);
     }
 
+    public void setRightTextOnClickListener(OnClickListener onClickListener) {
+        rightText.setOnClickListener(onClickListener);
+    }
+
     public void isShowLeftImage(boolean isShow) {
         if (isShow)
             leftImage.setVisibility(View.VISIBLE);
@@ -90,6 +102,14 @@ public class TitleView extends Toolbar {
             rightImage.setVisibility(View.VISIBLE);
         } else {
             rightImage.setVisibility(View.GONE);
+        }
+    }
+
+    public void isShowRightText(boolean isShow) {
+        if (isShow) {
+            rightText.setVisibility(View.VISIBLE);
+        } else {
+            rightText.setVisibility(View.GONE);
         }
     }
 
