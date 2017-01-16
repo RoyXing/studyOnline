@@ -1,12 +1,13 @@
 package com.study.online.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by roy on 2017/1/10.
  */
 
-public class KnowledgeBean {
+public class KnowledgeBean implements Serializable{
 
 
     /**
@@ -43,7 +44,7 @@ public class KnowledgeBean {
         this.response = response;
     }
 
-    public static class ResponseBean {
+    public static class ResponseBean implements Serializable{
         /**
          * id : 1
          * courseId : f6ef9a3bf6b54845b630efdfb1f47e44

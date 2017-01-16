@@ -1,21 +1,27 @@
 package com.study.online.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.study.online.R;
+import com.study.online.activity.CourseDetailActivity;
 import com.study.online.adapter.CourseRecyclerAdapter;
 import com.study.online.bean.KnowledgeBean;
 import com.study.online.config.Config;
 import com.study.online.utils.JsonToBean;
+import com.study.online.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +32,13 @@ import okhttp3.Call;
  * Created by roy on 2016/12/16.
  */
 
-public class CourseFragment extends BaseFragment {
+public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, CourseRecyclerAdapter.RecyclerViewListener {
 
     private View mView;
     private RecyclerView course_recyclerview;
     private CourseRecyclerAdapter mAdapter;
+    private SwipeRefreshLayout course_refresh;
+    private int currentPage = 0;
 
     @Nullable
     @Override
@@ -42,6 +50,7 @@ public class CourseFragment extends BaseFragment {
     }
 
     private void initView(View mView) {
+        course_refresh = (SwipeRefreshLayout) mView.findViewById(R.id.course_refresh);
         course_recyclerview = (RecyclerView) mView.findViewById(R.id.course_recyclerview);
     }
 
@@ -49,26 +58,44 @@ public class CourseFragment extends BaseFragment {
         mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean.ResponseBean>());
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         course_recyclerview.setLayoutManager(layoutManager);
-//        course_recyclerview.setAutoMeasureEnabled(true);
         course_recyclerview.setAdapter(mAdapter);
+        course_refresh.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
+        course_refresh.setOnRefreshListener(this);
+        mAdapter.setOnItemClickListener(this);
         getData();
-
     }
 
     public void getData() {
-        OkHttpUtils.post().url(Config.COURSE_LIST).addParams("type", "课程介绍").build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
+        OkHttpUtils.post().url(Config.COURSE_LIST)
+                .addParams("type", "课程介绍")
+                .addParams("page", currentPage + "")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-            }
+                    }
 
-            @Override
-            public void onResponse(String response, int id) {
-                KnowledgeBean bean = JsonToBean.getBean(response, KnowledgeBean.class);
-                List<KnowledgeBean.ResponseBean> list = bean.getResponse();
-                mAdapter.setData(list);
-            }
-        });
+                    @Override
+                    public void onResponse(String response, int id) {
+                        KnowledgeBean bean = JsonToBean.getBean(response, KnowledgeBean.class);
+                        List<KnowledgeBean.ResponseBean> list = bean.getResponse();
+                        Log.e("roy", list.toString());
+                        mAdapter.setData(list);
+                        course_refresh.setRefreshing(false);
+                    }
+                });
     }
 
+    @Override
+    public void onRefresh() {
+        getData();
+    }
+
+    @Override
+    public void onItemClickListener(View view, int position) {
+        Intent intent = new Intent(getContext(), CourseDetailActivity.class);
+        intent.putExtra("course", mAdapter.getData().get(position));
+        startActivity(intent);
+    }
 }

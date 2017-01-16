@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.study.online.R;
 import com.study.online.utils.ProgressGenerator;
@@ -57,7 +56,6 @@ public class LoginActivity extends Activity implements ProgressGenerator.OnCompl
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
-        Toast.makeText(this, "登录成功", Toast.LENGTH_LONG).show();
     }
 
     @Override

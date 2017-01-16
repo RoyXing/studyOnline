@@ -32,6 +32,9 @@
         <activity
             android:name=".activity.RegisterActivity"
             android:launchMode="singleTask" />
+
+        <activity android:name=".activity.CourseDetailActivity"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>
