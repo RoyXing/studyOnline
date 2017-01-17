@@ -35,6 +35,9 @@
 
         <activity android:name=".activity.CourseDetailActivity"
             android:launchMode="singleTask"/>
+        <activity
+            android:name=".activity.SourceActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
