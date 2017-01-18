@@ -21,6 +21,9 @@ import com.study.online.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +58,7 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
     }
 
     private void initEvent() {
-        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean.ResponseBean>());
+        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean>());
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         course_recyclerview.setLayoutManager(layoutManager);
         course_recyclerview.setAdapter(mAdapter);
@@ -78,10 +81,16 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
 
                     @Override
                     public void onResponse(String response, int id) {
-                        KnowledgeBean bean = JsonToBean.getBean(response, KnowledgeBean.class);
-                        List<KnowledgeBean.ResponseBean> list = bean.getResponse();
-                        Log.e("roy", list.toString());
-                        mAdapter.setData(list);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                List<KnowledgeBean> list = JsonToBean.getBeans(jsonObject.optString("response"), KnowledgeBean.class);
+                                mAdapter.setData(list);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         course_refresh.setRefreshing(false);
                     }
                 });

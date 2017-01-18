@@ -8,46 +8,63 @@
 
     <ImageView
         android:id="@+id/image_course"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:scaleType="centerCrop" />
+        android:layout_marginTop="5dp"
+        android:scaleType="fitCenter" />
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/course_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:text="11111" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp">
 
-        <TextView
-            android:id="@+id/course_publishing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            android:text="11111" />
+            <TextView
+                android:id="@+id/course_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:text="11111" />
 
-        <TextView
-            android:id="@+id/course_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/course_author"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:text="12111111111111111111111111111111111111"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/course_publishing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:text="11111" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/course_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/course_author"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="12111111111111111111111111111111111111"
+                android:textColor="@color/transparent_60"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/course_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/course_desc"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="12111111111111111111111111111111111111"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>

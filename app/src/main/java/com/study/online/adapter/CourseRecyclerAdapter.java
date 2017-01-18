@@ -22,7 +22,7 @@ import java.util.List;
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<KnowledgeBean.ResponseBean> data;
+    private List<KnowledgeBean> data;
     private LayoutInflater mInflater;
     private RecyclerViewListener onItemClickListener;
 
@@ -34,7 +34,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         this.onItemClickListener = onItemClickListener;
     }
 
-    public CourseRecyclerAdapter(Context context, List<KnowledgeBean.ResponseBean> data) {
+    public CourseRecyclerAdapter(Context context, List<KnowledgeBean> data) {
         mInflater = LayoutInflater.from(context);
         this.data = data;
         this.mContext = context;
@@ -73,36 +73,25 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
         LinearLayout course_linear;
         ImageView course_pic;
         TextView course_name;
-//        TextView course_author;
-//        TextView course_publishing;
-//        TextView course_desc;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             this.course_linear = (LinearLayout) itemView.findViewById(R.id.course_linear);
             this.course_pic = (ImageView) itemView.findViewById(R.id.course_pic);
             this.course_name = (TextView) itemView.findViewById(R.id.course_name);
-//            this.course_author = (TextView) itemView.findViewById(R.id.course_author);
-//            this.course_publishing = (TextView) itemView.findViewById(R.id.course_publishing);
-//            this.course_desc = (TextView) itemView.findViewById(R.id.course_desc);
         }
     }
 
-    public KnowledgeBean.ResponseBean getBean(int position) {
+    public KnowledgeBean getBean(int position) {
         return data.get(position);
     }
 
-    public void setData(List<KnowledgeBean.ResponseBean> data) {
+    public void setData(List<KnowledgeBean> data) {
         this.data = data;
         notifyDataSetChanged();
     }
 
-    public List<KnowledgeBean.ResponseBean> getData() {
+    public List<KnowledgeBean> getData() {
         return data;
-    }
-
-    public void addData(List<KnowledgeBean.ResponseBean> data) {
-        this.data.addAll(data);
-        notifyDataSetChanged();
     }
 }

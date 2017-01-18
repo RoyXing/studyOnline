@@ -22,6 +22,7 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
     private TextView course_author;
     private TextView course_publishing;
     private TextView course_desc;
+    private TextView course_content;
     private TitleView toolbar;
 
     @Override
@@ -37,18 +38,20 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
         course_author = (TextView) findViewById(R.id.course_author);
         course_publishing = (TextView) findViewById(R.id.course_publishing);
         course_desc = (TextView) findViewById(R.id.course_desc);
+        course_content = (TextView) findViewById(R.id.course_content);
         toolbar = (TitleView) findViewById(R.id.toolbar);
     }
 
     private void initEvent() {
         toolbar.isShowLeftImage(true);
         toolbar.setLeftImageOnClickListener(this);
-        KnowledgeBean.ResponseBean course = (KnowledgeBean.ResponseBean) getIntent().getSerializableExtra("course");
+        KnowledgeBean course = (KnowledgeBean) getIntent().getSerializableExtra("course");
         Picasso.with(this).load(course.getImages()).into(image_course);
         toolbar.setCustomTitle(course.getName());
         course_author.setText("作者：" + course.getAuthor());
         course_publishing.setText("出版社：" + course.getPublishing());
         course_desc.setText("描述：" + course.getDesc());
+        course_content.setText("内容：" + course.getContent());
     }
 
     @Override

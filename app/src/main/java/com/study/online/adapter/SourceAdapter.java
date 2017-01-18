@@ -74,7 +74,7 @@ public class SourceAdapter extends BaseAdapter {
     }
 
     public void setData(List<Source> data) {
-        this.data = data;
+        this.data.addAll(data);
         notifyDataSetChanged();
     }
 

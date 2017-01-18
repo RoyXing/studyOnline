@@ -3,6 +3,7 @@ package com.study.online.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.study.online.adapter.SourceAdapter;
 import com.study.online.bean.Source;
 import com.study.online.config.Config;
 import com.study.online.utils.JsonToBean;
+import com.study.online.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -31,11 +33,14 @@ import okhttp3.Call;
  * Created by roy on 2016/12/16.
  */
 
-public class ResourceFragment extends BaseFragment implements AdapterView.OnItemClickListener {
+public class ResourceFragment extends BaseFragment implements AdapterView.OnItemClickListener, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private View mView;
     private ListView source_listView;
     private SourceAdapter mAdapter;
+    private View footView;
+    private SwipeRefreshLayout resource_refresh;
+    private int page;
 
     @Nullable
     @Override
@@ -49,37 +54,54 @@ public class ResourceFragment extends BaseFragment implements AdapterView.OnItem
 
     private void initView() {
         source_listView = (ListView) mView.findViewById(R.id.source_listView);
+        resource_refresh = (SwipeRefreshLayout) mView.findViewById(R.id.resource_refresh);
         mAdapter = new SourceAdapter(getActivity(), new ArrayList<Source>());
-
+        footView = LayoutInflater.from(getActivity()).inflate(R.layout.footview, null);
+        source_listView.addFooterView(footView);
     }
 
     private void initEvent() {
         source_listView.setAdapter(mAdapter);
         source_listView.setOnItemClickListener(this);
+        resource_refresh.setOnRefreshListener(this);
+        footView.setOnClickListener(this);
         getData();
     }
 
     public void getData() {
 
-        OkHttpUtils.get().url(Config.LINK_LIST).build().execute(new StringCallback() {
-            @Override
-            public void onError(Call call, Exception e, int id) {
+        OkHttpUtils
+                .get()
+                .url(Config.LINK_LIST)
+                .addParams("page", page + "")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
 
-            }
-
-            @Override
-            public void onResponse(String response, int id) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
-                        List<Source> sourceList = JsonToBean.getBeans(jsonObject.optString("response").toString(), Source.class);
-                        mAdapter.setData(sourceList);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                List<Source> sourceList = JsonToBean.getBeans(jsonObject.optString("response").toString(), Source.class);
+                                if (page == 0)
+                                    mAdapter.getData().clear();
+                                if (sourceList.size() == 0) {
+                                    source_listView.removeFooterView(footView);
+                                    ToastUtils.show(getActivity(), "到底了～");
+                                }
+                                mAdapter.setData(sourceList);
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        resource_refresh.setRefreshing(false);
+                    }
+                });
     }
 
     @Override
@@ -88,5 +110,18 @@ public class ResourceFragment extends BaseFragment implements AdapterView.OnItem
         intent.putExtra("name", mAdapter.getData().get(position).getName());
         intent.putExtra("url", mAdapter.getData().get(position).getLink());
         startActivity(intent);
+    }
+
+    @Override
+    public void onRefresh() {
+        page = 0;
+        source_listView.addFooterView(footView);
+        getData();
+    }
+
+    @Override
+    public void onClick(View v) {
+        page++;
+        getData();
     }
 }
