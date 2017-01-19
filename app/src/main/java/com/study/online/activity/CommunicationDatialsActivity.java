@@ -16,7 +16,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 import com.study.online.R;
 import com.study.online.adapter.CommunicationCommitAdapter;
@@ -25,8 +24,7 @@ import com.study.online.bean.TopicCommitBean;
 import com.study.online.bean.TopicCommitLocalBean;
 import com.study.online.config.Config;
 import com.study.online.utils.DialogView;
-import com.study.online.utils.JsonResult;
-import com.study.online.utils.JsonUtils;
+import com.study.online.utils.JsonToBean;
 import com.study.online.utils.SharedPreferencesDB;
 import com.study.online.utils.TimeUtils;
 import com.study.online.utils.ToastUtils;
@@ -36,6 +34,9 @@ import com.study.online.view.TitleView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +64,6 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
     TopicCommitLocalBean topicBean;
     DialogView dialogView;
     int page = 0;
-    int pageCache=0;//请求页缓存，用来去出重复数据
     String commitNumber = "";//传给列表界面的评论数
     boolean write = false;//用判定是否是提交时刷新
     TopicBean topicBeanf;//上个界面传过来的数据
@@ -126,6 +126,7 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
 
     /**
      * 列表界面传递过来的数据
+     *
      * @param bean
      */
     public void onEvent(TopicBean bean) {
@@ -164,32 +165,30 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
 
                     @Override
                     public void onResponse(String response, int id) {
-                        JsonResult<TopicBean> result = new JsonResult<TopicBean>();
                         try {
-                            result = JsonUtils.getObject(response, new TypeToken<JsonResult<TopicBean>>() {
-                            }.getType());
-                            if (result.getCode() == 10000) {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.opt("info").equals("success")) {
+                                TopicBean topicBean = JsonToBean.getBean(jsonObject.optString("response").toString(), TopicBean.class);
                                 //如果评论的数据多余当前显示的数据，只让上面的评论数+1
-                                setHeadData(result);
+                                setHeadData(topicBean);
                                 if (write) {//如果是评论时刷新数据
                                     write = false;
                                     if (list.size() >= 10) {//超过10条，不予理会
                                         expandListview.removeFooterView(footview);
                                         expandListview.addFooterView(footview);
                                     } else {//未满10条，刷新界面，显示那条数据
-                                        listDataSet(result);
+                                        listDataSet(topicBean);
                                     }
                                 } else {//不是的时候走正常的路
-                                    listDataSet(result);
+                                    listDataSet(topicBean);
                                 }
                             }
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+
                         if (dialogView != null)
                             dialogView.close();
-                        pageCache=page;
                     }
 
                 });
@@ -200,39 +199,39 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
      *
      * @param result
      */
-    private void listDataSet(JsonResult<TopicBean> result) {
+    private void listDataSet(TopicBean result) {
         expandListview.removeFooterView(footview);
         ToastUtils.show(CommunicationDatialsActivity.this, "评论加载成功");
         if (page == 0)
             list.clear();
         //去除重复的数据，在评论数据未满整数时
-        if (list.size()>0&&(page+1)*10>list.size()){
-            int size=list.size()%10;
-            for (int i=size-1;i>=0;i--){
-                list.remove(page*10+i);
+        if (list.size() > 0 && (page + 1) * 10 > list.size()) {
+            int size = list.size() % 10;
+            for (int i = size - 1; i >= 0; i--) {
+                list.remove(page * 10 + i);
             }
         }
-        if (result.getResponse().getCommentList().size() >= 10) {
+        if (result.getCommentList().size() >= 10) {
             expandListview.addFooterView(footview);
             page++;
         } else {
             expandListview.removeFooterView(footview);
         }
-        list.addAll(result.getResponse().getCommentList());
+        list.addAll(result.getCommentList());
         adapter.notifyDataSetChanged();
         //if (page == 0)
-            //scrollView.smoothScrollTo(0, 0);
+        //scrollView.smoothScrollTo(0, 0);
     }
 
     //对头部的数据进行更新
-    private void setHeadData(JsonResult<TopicBean> result) {
-        userName.setText(result.getResponse().getUserName());
+    private void setHeadData(TopicBean result) {
+        userName.setText(result.getUserName());
         //articleTitle.setText(bean.getBean().getTitle());
         articleTitle.setVisibility(View.GONE);
-        articleContent.setText(result.getResponse().getContent());
-        articleCommit.setText("评论数：" + result.getResponse().getCommentNum());
-        articleTime.setText(TimeUtils.longToString(result.getResponse().getCreateTime()));
-        commitNumber = result.getResponse().getCommentNum();
+        articleContent.setText(result.getContent());
+        articleCommit.setText("评论数：" + result.getCommentNum());
+        articleTime.setText(TimeUtils.longToString(result.getCreateTime()));
+        commitNumber = result.getCommentNum();
     }
 
     /**
@@ -259,22 +258,23 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
 
                     @Override
                     public void onResponse(String response, int id) {
-                        JsonResult<String> result;
                         try {
-                            result = JsonUtils.getObject(response, new TypeToken<JsonResult<String>>() {
-                            }.getType());
-                            if (result.getCode() == 10000) {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
                                 write = true;
-                                ToastUtils.show(CommunicationDatialsActivity.this, "评论成功");
                                 if (list.size() < 10) {//小于10条的时候，直接刷新
                                     page = 0;
                                 }
+                                ToastUtils.show(CommunicationDatialsActivity.this, "评论成功");
                                 getDatials();
+                            } else {
+                                ToastUtils.show(CommunicationDatialsActivity.this, "评论失败！");
                             }
-
-                        } catch (Exception e) {
-
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+
+
                         if (dialogView != null)
                             dialogView.close();
                     }

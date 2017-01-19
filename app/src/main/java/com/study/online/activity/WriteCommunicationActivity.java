@@ -7,12 +7,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.reflect.TypeToken;
 import com.study.online.R;
 import com.study.online.config.Config;
 import com.study.online.utils.DialogView;
-import com.study.online.utils.JsonResult;
-import com.study.online.utils.JsonUtils;
 import com.study.online.utils.SharedPreferencesDB;
 import com.study.online.utils.ToastUtils;
 import com.study.online.view.TitleView;
@@ -20,6 +17,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 
+import org.json.JSONObject;
 
 import okhttp3.Call;
 
@@ -33,6 +31,7 @@ public class WriteCommunicationActivity extends Activity implements View.OnClick
     TitleView mToolbar;
     EditText edTitle, edContent;
     DialogView dialogView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,26 +69,24 @@ public class WriteCommunicationActivity extends Activity implements View.OnClick
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        ToastUtils.show(WriteCommunicationActivity.this,e.toString());
-                        if (dialogView!=null)
+                        ToastUtils.show(WriteCommunicationActivity.this, e.toString());
+                        if (dialogView != null)
                             dialogView.close();
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        JsonResult<String> result = new JsonResult<String>();
                         try {
-                            result = JsonUtils.getObject(response, new TypeToken<JsonResult<String>>() {
-                            }.getType());
-                            if (result.getCode()== 10000){
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
                                 ToastUtils.show(WriteCommunicationActivity.this, "上传成功");
                                 finish();
                             }
-                        }catch (Exception e){
-
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
-                        if (dialogView!=null)
+                        if (dialogView != null)
                             dialogView.close();
 
                     }
@@ -109,7 +106,7 @@ public class WriteCommunicationActivity extends Activity implements View.OnClick
         } else {
             try {
                 up();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }

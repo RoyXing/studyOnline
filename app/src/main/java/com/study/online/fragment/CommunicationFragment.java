@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-import com.google.gson.reflect.TypeToken;
 import com.study.online.R;
 import com.study.online.activity.CommunicationDatialsActivity;
 import com.study.online.activity.WriteCommunicationActivity;
@@ -20,12 +19,13 @@ import com.study.online.adapter.CommunicationAdapter;
 import com.study.online.bean.TopicBean;
 import com.study.online.config.Config;
 import com.study.online.utils.DialogView;
-import com.study.online.utils.JsonResult;
-import com.study.online.utils.JsonUtils;
+import com.study.online.utils.JsonToBean;
 import com.study.online.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +78,6 @@ public class CommunicationFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 positon = position;
-                ToastUtils.show(getActivity(), "有作用吗?");
                 Intent intent = new Intent(getActivity(), CommunicationDatialsActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("bean", list.get(position));
@@ -135,21 +134,20 @@ public class CommunicationFragment extends BaseFragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        JsonResult<List<TopicBean>> result;
                         try {
-                            result = JsonUtils.getObject(response, new TypeToken<JsonResult<List<TopicBean>>>() {
-                            }.getType());
-                            if (result.getCode() == 10000) {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                List<TopicBean> topicBeanList = JsonToBean.getBeans(jsonObject.opt("response").toString(), TopicBean.class);
                                 listView.removeFooterView(footview);
                                 if (page == 0)
                                     list.clear();
-                                if (result.getResponse().size() >= 10) {
+                                if (topicBeanList.size() >= 10) {
                                     page++;
                                     listView.addFooterView(footview);
                                 } else {
                                     listView.removeFooterView(footview);
                                 }
-                                list.addAll(result.getResponse());
+                                list.addAll(topicBeanList);
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (Exception e) {
@@ -164,16 +162,6 @@ public class CommunicationFragment extends BaseFragment {
                 });
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onEvent(String[] data) {
-//        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).getTopicId().equals(data[0])) {
-//                list.get(i).setCommentNum(data[1]);
-//                adapter.notifyDataSetChanged();
-//                break;
-//            }
-//        }
-//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

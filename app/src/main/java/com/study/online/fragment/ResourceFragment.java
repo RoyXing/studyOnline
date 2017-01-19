@@ -86,12 +86,15 @@ public class ResourceFragment extends BaseFragment implements AdapterView.OnItem
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                source_listView.removeFooterView(footView);
                                 List<Source> sourceList = JsonToBean.getBeans(jsonObject.optString("response").toString(), Source.class);
                                 if (page == 0)
                                     mAdapter.getData().clear();
-                                if (sourceList.size() == 0) {
+                                if (sourceList.size() >= 10) {
+                                    page++;
+                                    source_listView.addFooterView(footView);
+                                } else {
                                     source_listView.removeFooterView(footView);
-                                    ToastUtils.show(getActivity(), "到底了～");
                                 }
                                 mAdapter.setData(sourceList);
 
@@ -121,7 +124,6 @@ public class ResourceFragment extends BaseFragment implements AdapterView.OnItem
 
     @Override
     public void onClick(View v) {
-        page++;
         getData();
     }
 }

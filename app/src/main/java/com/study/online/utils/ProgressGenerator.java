@@ -46,17 +46,16 @@ public class ProgressGenerator {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        JsonResult<UserBean> result;
                         try {
-                            Log.e("roy", response.toString());
-                            result = JsonUtils.getObject(response, new TypeToken<JsonResult<UserBean>>() {
-                            }.getType());
-                            if (result.getCode() == 10000) {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                UserBean userBean = JsonToBean.getBean(jsonObject.optString("response").toString(), UserBean.class);
+                                SharedPreferencesDB.getInstance(context).setString("userid", userBean.getUserId());
                                 mListener.onComplete();
-                                SharedPreferencesDB.getInstance(context).setString("userid", result.getResponse().getUserId());
                             } else {
-                                ToastUtils.show(context, "登录失败");
+                                ToastUtils.show(context, "登录失败！");
                             }
+
                         } catch (Exception e) {
                             e.printStackTrace();
                             ToastUtils.show(context, "账号或密码出错");
