@@ -58,7 +58,7 @@ public class CommunicationCommitAdapter extends ArrayAdapter<TopicCommitBean> {
         } else {
             holderView = (HolderView) convertView.getTag();
         }
-        Picasso.with(context).load(list.get(position).getUserIcon()).into(holderView.headImg);
+        Picasso.with(context).load(list.get(position).getUserIcon()).placeholder(R.drawable.icon).error(R.drawable.icon).into(holderView.headImg);
         holderView.userName.setText(list.get(position).getUserName()+"("+(position+1)+"楼)");
         holderView.time.setText(TimeUtils.longToString(list.get(position).getCreateTime()));
         String parentName=getParentName(list.get(position));

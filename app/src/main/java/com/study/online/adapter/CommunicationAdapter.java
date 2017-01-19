@@ -1,7 +1,6 @@
 package com.study.online.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -12,13 +11,10 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.study.online.R;
-import com.study.online.activity.CommunicationDatialsActivity;
 import com.study.online.bean.TopicBean;
-import com.study.online.eventbusbean.CommunicationEventBean;
 import com.study.online.utils.TimeUtils;
 import com.study.online.view.RoundImageView;
 
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -65,16 +61,7 @@ public class CommunicationAdapter extends ArrayAdapter<TopicBean> {
         holder.articleContent.setText(list.get(position).getContent());
         holder.articleCommit.setText("评论数：" + list.get(position).getCommentNum());
         holder.articleTime.setText(TimeUtils.longToString(list.get(position).getCreateTime()) + "");
-        Picasso.with(context).load(list.get(position).getIcon()).into(holder.userImg);
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CommunicationDatialsActivity.class);
-                context.startActivity(intent);
-                EventBus.getDefault().postSticky(new CommunicationEventBean(list.get(position), "activity"));
-
-            }
-        });
+        Picasso.with(context).load(list.get(position).getIcon()).placeholder(R.drawable.icon).error(R.drawable.icon).into(holder.userImg);
         return convertView;
     }
 

@@ -2,6 +2,7 @@ package com.study.online.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -23,7 +24,6 @@ import com.study.online.bean.TopicBean;
 import com.study.online.bean.TopicCommitBean;
 import com.study.online.bean.TopicCommitLocalBean;
 import com.study.online.config.Config;
-import com.study.online.eventbusbean.CommunicationEventBean;
 import com.study.online.utils.DialogView;
 import com.study.online.utils.JsonResult;
 import com.study.online.utils.JsonUtils;
@@ -36,9 +36,6 @@ import com.study.online.view.TitleView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,8 +63,10 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
     TopicCommitLocalBean topicBean;
     DialogView dialogView;
     int page = 0;
-    String commitNumber = "";
+    int pageCache=0;//请求页缓存，用来去出重复数据
+    String commitNumber = "";//传给列表界面的评论数
     boolean write = false;//用判定是否是提交时刷新
+    TopicBean topicBeanf;//上个界面传过来的数据
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +75,9 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
         initView();
         topicBean = new TopicCommitLocalBean();
         topicBean.setUserId(SharedPreferencesDB.getInstance(this).getString("userid", ""));
-        EventBus.getDefault().register(this);
+        topicBeanf = (TopicBean) getIntent().getBundleExtra("intent").getSerializable("bean");
+        onEvent(topicBeanf);
+
     }
 
     private void initView() {
@@ -123,23 +124,20 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
         });
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onEvent(CommunicationEventBean bean) {
-        if (bean.getMsg() == "activity") {
-            userName.setText(bean.getBean().getUserName());
+    /**
+     * 列表界面传递过来的数据
+     * @param bean
+     */
+    public void onEvent(TopicBean bean) {
+        if (bean != null) {
+            userName.setText(bean.getUserName());
             //articleTitle.setText(bean.getBean().getTitle());
             articleTitle.setVisibility(View.GONE);
-            articleContent.setText(bean.getBean().getContent());
-            articleCommit.setText("评论数：" + bean.getBean().getCommentNum());
-            articleTime.setText(TimeUtils.longToString(bean.getBean().getCreateTime()));
-            Picasso.with(this).load(bean.getBean().getIcon()).into(userImg);
-            topicBean.setTopicId(bean.getBean().getTopicId());
+            articleContent.setText(bean.getContent());
+            articleCommit.setText("评论数：" + bean.getCommentNum());
+            articleTime.setText(TimeUtils.longToString(bean.getCreateTime()));
+            Picasso.with(this).load(bean.getIcon()).placeholder(R.drawable.icon).error(R.drawable.icon).into(userImg);
+            topicBean.setTopicId(bean.getTopicId());
             topicBean.setParentId("");
             getDatials();
         }
@@ -175,10 +173,10 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
                                 setHeadData(result);
                                 if (write) {//如果是评论时刷新数据
                                     write = false;
-                                    if (list.size() >= 20) {//超过20条，不予理会
+                                    if (list.size() >= 10) {//超过10条，不予理会
                                         expandListview.removeFooterView(footview);
                                         expandListview.addFooterView(footview);
-                                    } else {//未满20条，刷新界面，显示那条数据
+                                    } else {//未满10条，刷新界面，显示那条数据
                                         listDataSet(result);
                                     }
                                 } else {//不是的时候走正常的路
@@ -191,18 +189,30 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
                         }
                         if (dialogView != null)
                             dialogView.close();
-
+                        pageCache=page;
                     }
 
                 });
     }
 
+    /**
+     * 列表数据更新
+     *
+     * @param result
+     */
     private void listDataSet(JsonResult<TopicBean> result) {
         expandListview.removeFooterView(footview);
         ToastUtils.show(CommunicationDatialsActivity.this, "评论加载成功");
         if (page == 0)
             list.clear();
-        if (result.getResponse().getCommentList().size() >= 20) {
+        //去除重复的数据，在评论数据未满整数时
+        if (list.size()>0&&(page+1)*10>list.size()){
+            int size=list.size()%10;
+            for (int i=size-1;i>=0;i--){
+                list.remove(page*10+i);
+            }
+        }
+        if (result.getResponse().getCommentList().size() >= 10) {
             expandListview.addFooterView(footview);
             page++;
         } else {
@@ -210,11 +220,11 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
         }
         list.addAll(result.getResponse().getCommentList());
         adapter.notifyDataSetChanged();
-        articleCommit.setText("评论数：" + list.size());
-        if (page == 0)
-            scrollView.smoothScrollTo(0, 0);
+        //if (page == 0)
+            //scrollView.smoothScrollTo(0, 0);
     }
 
+    //对头部的数据进行更新
     private void setHeadData(JsonResult<TopicBean> result) {
         userName.setText(result.getResponse().getUserName());
         //articleTitle.setText(bean.getBean().getTitle());
@@ -256,7 +266,7 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
                             if (result.getCode() == 10000) {
                                 write = true;
                                 ToastUtils.show(CommunicationDatialsActivity.this, "评论成功");
-                                if (list.size() < 20) {
+                                if (list.size() < 10) {//小于10条的时候，直接刷新
                                     page = 0;
                                 }
                                 getDatials();
@@ -273,9 +283,8 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        EventBus.getDefault().post(new String[]{topicBean.getTopicId(), commitNumber});
+    public void onBackPressed() {//返回时把当前的评论数返回，用于列表界面的刷新
+        returnIntent();
         finish();
     }
 
@@ -283,7 +292,7 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.title_back:
-                EventBus.getDefault().post(new String[]{topicBean.getTopicId(), commitNumber});
+                returnIntent();
                 finish();
                 break;
             case R.id.btn_commit:
@@ -310,9 +319,12 @@ public class CommunicationDatialsActivity extends Activity implements View.OnCli
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
+    /**
+     * 评论次数数据返回
+     */
+    private void returnIntent() {
+        Intent intent = new Intent();
+        intent.putExtra("number", commitNumber);
+        setResult(Activity.RESULT_OK, intent);
     }
 }
