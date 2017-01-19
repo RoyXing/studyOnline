@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.study.online.R;
 import com.study.online.activity.CourseDetailActivity;
+import com.study.online.activity.MainActivity;
 import com.study.online.adapter.CourseRecyclerAdapter;
 import com.study.online.bean.KnowledgeBean;
 import com.study.online.config.Config;
@@ -23,6 +25,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +44,10 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
     private RecyclerView course_recyclerview;
     private CourseRecyclerAdapter mAdapter;
     private SwipeRefreshLayout course_refresh;
+    private TextView load;
     private int currentPage = 0;
+    private List<KnowledgeBean> listbean;
+    private boolean loadMore = false;//是否加载更多
 
     @Nullable
     @Override
@@ -55,6 +61,8 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
     private void initView(View mView) {
         course_refresh = (SwipeRefreshLayout) mView.findViewById(R.id.course_refresh);
         course_recyclerview = (RecyclerView) mView.findViewById(R.id.course_recyclerview);
+        load = (TextView) mView.findViewById(R.id.load);
+        load.setVisibility(View.GONE);
     }
 
     private void initEvent() {
@@ -65,7 +73,33 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
         course_refresh.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
         course_refresh.setOnRefreshListener(this);
         mAdapter.setOnItemClickListener(this);
+        listbean = new ArrayList<>();
         getData();
+        course_recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (isSlideToBottom(recyclerView) && loadMore) {
+                    load.setVisibility(View.VISIBLE);
+                    getData();
+                } else {
+                    load.setVisibility(View.GONE);
+                }
+
+            }
+        });
+    }
+
+    protected boolean isSlideToBottom(RecyclerView recyclerView) {
+        if (recyclerView == null) return false;
+        if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset() >= recyclerView.computeVerticalScrollRange())
+            return true;
+        return false;
     }
 
     public void getData() {
@@ -76,7 +110,8 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-
+                        load.setVisibility(View.GONE);
+                        course_refresh.setRefreshing(false);
                     }
 
                     @Override
@@ -85,12 +120,21 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
                                 List<KnowledgeBean> list = JsonToBean.getBeans(jsonObject.optString("response"), KnowledgeBean.class);
-                                mAdapter.setData(list);
+                                if (currentPage == 0)
+                                    listbean.clear();
+                                if (list.size() >= 10) {
+                                    currentPage++;
+                                    loadMore = true;
+                                } else {
+                                    loadMore = false;
+                                }
+                                listbean.addAll(list);
+                                mAdapter.setData(listbean);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                        load.setVisibility(View.GONE);
                         course_refresh.setRefreshing(false);
                     }
                 });
@@ -98,6 +142,7 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     @Override
     public void onRefresh() {
+        currentPage = 0;
         getData();
     }
 

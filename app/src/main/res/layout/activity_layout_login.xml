@@ -25,9 +25,9 @@
             android:layout_marginBottom="16dp"
             android:drawableLeft="@drawable/login_account"
             android:drawablePadding="5dp"
-            android:hint="账号"
+            android:hint="请输入你的账号"
             android:inputType="textEmailAddress"
-            android:text="15136102501" />
+             />
 
         <View
             android:layout_width="match_parent"
@@ -41,9 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:drawableLeft="@drawable/login_pwd"
-            android:hint="密码"
+            android:hint="请输入你的密码"
             android:inputType="textPassword"
-            android:text="123456" />
+             />
 
     </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.study.online;
 
 import android.app.Application;
 
+import com.study.online.bean.UserBean;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -14,11 +15,14 @@ import okhttp3.OkHttpClient;
 
 public class App extends Application {
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         init();
     }
+
+
 
     /**
      * 网络请求封装，okhttputils  张鸿洋的

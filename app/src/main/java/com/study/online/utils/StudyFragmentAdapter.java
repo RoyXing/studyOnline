@@ -4,6 +4,7 @@ package com.study.online.utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -35,5 +36,10 @@ public class StudyFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return mList.get(position % mList.size());
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        //super.destroyItem(container, position, object);
     }
 }

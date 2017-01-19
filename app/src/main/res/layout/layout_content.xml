@@ -33,9 +33,8 @@
 
     </RelativeLayout>
 
-
     <LinearLayout
-        android:layout_width="260sp"
+        android:layout_width="260dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/white"
@@ -43,27 +42,8 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         android:drawSelectorOnTop="false">
-
-        <fragment
-            android:id="@+id/slide_fragment"
-            android:name="com.study.online.fragment.SlideFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"/>
+        <include layout="@layout/slide_menu_person_message"/>
 
     </LinearLayout>
-
-
-    <!-- <ListView
-         android:id="@+id/navdrawer"
-         android:layout_width="260dp"
-         android:layout_height="match_parent"
-         android:layout_gravity="start"
-         android:background="@android:color/white"
-         android:choiceMode="singleChoice"
-         android:divider="@android:color/transparent"
-         android:dividerHeight="0dp"
-         android:drawSelectorOnTop="false"/>-->
-
 </android.support.v4.widget.DrawerLayout>
 

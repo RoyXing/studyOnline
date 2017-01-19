@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.study.online.R;
 import com.study.online.activity.CourseDetailActivity;
@@ -39,7 +40,9 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
     private SwipeRefreshLayout computer_refresh;
     private CourseRecyclerAdapter mAdapter;
     private int currentPage = 0;
-
+    private TextView load;
+    private List<KnowledgeBean> listbean;
+    private boolean loadMore = false;//是否加载更多
 
     @Nullable
     @Override
@@ -53,6 +56,8 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
     private void initView() {
         computer_recyclerview = (RecyclerView) mView.findViewById(R.id.computer_recyclerview);
         computer_refresh = (SwipeRefreshLayout) mView.findViewById(R.id.computer_refresh);
+        load = (TextView) mView.findViewById(R.id.load);
+        load.setVisibility(View.GONE);
     }
 
     private void initEvent() {
@@ -63,9 +68,33 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
         computer_recyclerview.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
         computer_refresh.setOnRefreshListener(this);
         mAdapter.setOnItemClickListener(this);
+        listbean=new ArrayList<>();
         getData();
-    }
+        computer_recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (isSlideToBottom(recyclerView) && loadMore) {
+                    load.setVisibility(View.VISIBLE);
+                    getData();
+                } else {
+                    load.setVisibility(View.GONE);
+                }
+
+            }
+        });
+    }
+    protected boolean isSlideToBottom(RecyclerView recyclerView) {
+        if (recyclerView == null) return false;
+        if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset() >= recyclerView.computeVerticalScrollRange())
+            return true;
+        return false;
+    }
     private void getData() {
         OkHttpUtils.post().url(Config.COURSE_LIST)
                 .addParams("type", "计算机课程")
@@ -74,7 +103,8 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
                 .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
-
+                        load.setVisibility(View.GONE);
+                        computer_refresh.setRefreshing(false);
                     }
 
                     @Override
@@ -83,12 +113,21 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
                                 List<KnowledgeBean> list = JsonToBean.getBeans(jsonObject.optString("response"), KnowledgeBean.class);
-                                mAdapter.setData(list);
+                                if (currentPage==0)
+                                    listbean.clear();
+                                if (list.size()>=10){
+                                    currentPage++;
+                                    loadMore=true;
+                                }else {
+                                    loadMore=false;
+                                }
+                                listbean.addAll(list);
+                                mAdapter.setData(listbean);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
+                        load.setVisibility(View.GONE);
                         computer_refresh.setRefreshing(false);
                     }
                 });
@@ -96,6 +135,7 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
+        currentPage=0;
         getData();
     }
 

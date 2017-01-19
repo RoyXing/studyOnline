@@ -57,9 +57,9 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register:
-                register_nickname.setEnabled(false);
-                register_account.setEnabled(false);
-                register_password.setEnabled(false);
+//                register_nickname.setEnabled(false);
+//                register_account.setEnabled(false);
+//                register_password.setEnabled(false);
                 progressGenerator.register(this, register_nickname.getText().toString(), register_account.getText().toString(), register_password.getText().toString());
                 break;
             case R.id.title_back:

@@ -7,7 +7,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/computer_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/computer_recyclerview"
@@ -15,5 +16,11 @@
             android:layout_height="match_parent" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
+    <TextView
+        android:id="@+id/load"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="加载中..."/>
 </LinearLayout>

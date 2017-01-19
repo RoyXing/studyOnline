@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.study.online.App;
 import com.study.online.bean.UserBean;
 import com.study.online.config.Config;
 import com.study.online.view.button.ProcessButton;
@@ -51,6 +52,8 @@ public class ProgressGenerator {
                             if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
                                 UserBean userBean = JsonToBean.getBean(jsonObject.optString("response").toString(), UserBean.class);
                                 SharedPreferencesDB.getInstance(context).setString("userid", userBean.getUserId());
+                                SharedPreferencesDB.getInstance(context).setString("username", userBean.getUserName());
+                                SharedPreferencesDB.getInstance(context).setString("userimgae", userBean.getIcon());
                                 mListener.onComplete();
                             } else {
                                 ToastUtils.show(context, "登录失败！");

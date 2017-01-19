@@ -3,11 +3,14 @@ package com.study.online.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
 import com.study.online.R;
 import com.study.online.utils.ProgressGenerator;
+import com.study.online.utils.SharedPreferencesDB;
+import com.study.online.utils.ToastUtils;
 import com.study.online.view.TitleView;
 import com.study.online.view.button.ActionProcessButton;
 
@@ -53,6 +56,7 @@ public class LoginActivity extends Activity implements ProgressGenerator.OnCompl
 
     @Override
     public void onComplete() {
+        SharedPreferencesDB.getInstance(this).setBoolean("isLogin", true);
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
@@ -62,10 +66,16 @@ public class LoginActivity extends Activity implements ProgressGenerator.OnCompl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnSignIn:
-                btnSignIn.setEnabled(false);
-                editEmail.setEnabled(false);
-                editPassword.setEnabled(false);
-                progressGenerator.login(this, editEmail.getText().toString(), editPassword.getText().toString());
+                if (TextUtils.isEmpty(editEmail.getText().toString())) {
+                    ToastUtils.show(LoginActivity.this, "请输入你的账号");
+                } else if (TextUtils.isEmpty(editPassword.getText().toString())) {
+                    ToastUtils.show(LoginActivity.this, "请输入你的密码");
+                } else {
+//                    btnSignIn.setEnabled(false);
+//                    editEmail.setEnabled(false);
+//                    editPassword.setEnabled(false);
+                    progressGenerator.login(this, editEmail.getText().toString(), editPassword.getText().toString());
+                }
                 break;
             case R.id.title_back:
                 finish();
