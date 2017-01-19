@@ -135,7 +135,7 @@ public class CommunicationFragment extends BaseFragment {
 
                     @Override
                     public void onResponse(String response, int id) {
-                        JsonResult<List<TopicBean>> result = new JsonResult<List<TopicBean>>();
+                        JsonResult<List<TopicBean>> result;
                         try {
                             result = JsonUtils.getObject(response, new TypeToken<JsonResult<List<TopicBean>>>() {
                             }.getType());

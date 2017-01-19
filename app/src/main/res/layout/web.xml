@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/title_toolbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9.3"
+            tools:ignore="NestedWeights" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:background="@color/transparent_20">
+
+            <ImageButton
+                android:id="@+id/web_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/button_selector"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/web_back_disable" />
+
+            <ImageButton
+                android:id="@+id/web_forward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="24dp"
+                android:layout_toRightOf="@id/web_back"
+                android:background="@drawable/button_selector"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/web_forward_disable" />
+
+            <ImageButton
+                android:id="@+id/web_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/button_selector"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/web_refresh" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

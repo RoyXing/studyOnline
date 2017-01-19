@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -21,10 +22,19 @@ import java.util.List;
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<KnowledgeBean.ResponseBean> data;
+    private List<KnowledgeBean> data;
     private LayoutInflater mInflater;
+    private RecyclerViewListener onItemClickListener;
 
-    public CourseRecyclerAdapter(Context context, List<KnowledgeBean.ResponseBean> data) {
+    public interface RecyclerViewListener {
+        void onItemClickListener(View view, int position);
+    }
+
+    public void setOnItemClickListener(RecyclerViewListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public CourseRecyclerAdapter(Context context, List<KnowledgeBean> data) {
         mInflater = LayoutInflater.from(context);
         this.data = data;
         this.mContext = context;
@@ -36,13 +46,21 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+
+        holder.course_linear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                onItemClickListener.onItemClickListener(v, pos);
+            }
+        });
 
         Picasso.with(mContext).load(getBean(position).getImages()).into(holder.course_pic);
-        holder.course_name.setText("名称：" + getBean(position).getName());
-        holder.course_author.setText("作 者：" + getBean(position).getAuthor());
-        holder.course_publishing.setText("产商：" + getBean(position).getPublishing());
-        holder.course_desc.setText("描 述：" + getBean(position).getDesc());
+        holder.course_name.setText(getBean(position).getName());
+//        holder.course_author.setText("作 者：" + getBean(position).getAuthor());
+//        holder.course_publishing.setText("产 商：" + getBean(position).getPublishing());
+//        holder.course_desc.setText("描 述：" + getBean(position).getDesc());
     }
 
     @Override
@@ -52,28 +70,28 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout course_linear;
         ImageView course_pic;
         TextView course_name;
-        TextView course_author;
-        TextView course_publishing;
-        TextView course_desc;
 
         public MyViewHolder(View itemView) {
             super(itemView);
+            this.course_linear = (LinearLayout) itemView.findViewById(R.id.course_linear);
             this.course_pic = (ImageView) itemView.findViewById(R.id.course_pic);
             this.course_name = (TextView) itemView.findViewById(R.id.course_name);
-            this.course_author = (TextView) itemView.findViewById(R.id.course_author);
-            this.course_publishing = (TextView) itemView.findViewById(R.id.course_publishing);
-            this.course_desc = (TextView) itemView.findViewById(R.id.course_desc);
         }
     }
 
-    public KnowledgeBean.ResponseBean getBean(int position) {
+    public KnowledgeBean getBean(int position) {
         return data.get(position);
     }
 
-    public void setData(List<KnowledgeBean.ResponseBean> data) {
+    public void setData(List<KnowledgeBean> data) {
         this.data = data;
         notifyDataSetChanged();
+    }
+
+    public List<KnowledgeBean> getData() {
+        return data;
     }
 }

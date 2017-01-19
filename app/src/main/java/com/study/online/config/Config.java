@@ -27,5 +27,9 @@ public class Config {
     //话题评论
     public static String ADD_COMMENT_TOPIC = URL + "/comment/add";
 
+    //课程介绍／教育课程／计算机课程
     public static String COURSE_LIST = URL + "/course/list";
+
+    //资源
+    public static String LINK_LIST = URL + "/link/list";
 }
