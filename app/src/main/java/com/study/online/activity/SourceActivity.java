@@ -31,9 +31,13 @@ public class SourceActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.web);
         String name = getIntent().getStringExtra("name");
-
+        String title;
+        if (name.length() > 6)
+            title = name.substring(0, 3) + "..." + name.substring(name.length() - 3, name.length());
+        else
+            title = name;
         mToolbar = (TitleView) findViewById(R.id.toolbar);
-        mToolbar.setCustomTitle(name);
+        mToolbar.setCustomTitle(title);
         mToolbar.isShowLeftImage(true);
         mToolbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override

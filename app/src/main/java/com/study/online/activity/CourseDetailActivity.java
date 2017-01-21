@@ -53,7 +53,7 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
         String name = course.getName();
         String title;
         if (name.length() > 6)
-            title = name.substring(0, 2) + "..." + name.substring(name.length() - 3, name.length() - 1);
+            title = name.substring(0, 3) + "..." + name.substring(name.length() - 3, name.length());
         else
             title = name;
         toolbar.setCustomTitle(title);
