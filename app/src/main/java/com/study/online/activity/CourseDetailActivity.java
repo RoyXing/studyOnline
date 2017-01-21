@@ -23,6 +23,8 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
     private TextView course_publishing;
     private TextView course_desc;
     private TextView course_content;
+    private TextView course_name;
+    private TextView course_dictionary;
     private TitleView toolbar;
 
     @Override
@@ -39,6 +41,8 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
         course_publishing = (TextView) findViewById(R.id.course_publishing);
         course_desc = (TextView) findViewById(R.id.course_desc);
         course_content = (TextView) findViewById(R.id.course_content);
+        course_name = (TextView) findViewById(R.id.course_name);
+        course_dictionary = (TextView) findViewById(R.id.course_dictionary);
         toolbar = (TitleView) findViewById(R.id.toolbar);
     }
 
@@ -46,12 +50,23 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
         toolbar.isShowLeftImage(true);
         toolbar.setLeftImageOnClickListener(this);
         KnowledgeBean course = (KnowledgeBean) getIntent().getSerializableExtra("course");
+        String name = course.getName();
+        String title;
+        if (name.length() > 6)
+            title = name.substring(0, 2) + "..." + name.substring(name.length() - 3, name.length() - 1);
+        else
+            title = name;
+        toolbar.setCustomTitle(title);
+        String dictionary = course.getDirectory();
+
+
+        course_dictionary.setText(dictionary);
+        course_name.setText(name);
         Picasso.with(this).load(course.getImages()).into(image_course);
-        toolbar.setCustomTitle(course.getName());
         course_author.setText("作者：" + course.getAuthor());
         course_publishing.setText("出版社：" + course.getPublishing());
-        course_desc.setText("描述：" + course.getDesc());
-        course_content.setText("内容：" + course.getContent());
+        course_desc.setText(course.getDesc());
+        course_content.setText(course.getContent());
     }
 
     @Override
