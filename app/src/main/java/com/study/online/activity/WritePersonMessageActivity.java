@@ -46,6 +46,8 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 
@@ -535,7 +537,7 @@ public class WritePersonMessageActivity extends Activity implements View.OnClick
                 photo.compress(Bitmap.CompressFormat.JPEG, 75, stream);
 
                 String imageDir = Environment.getExternalStorageDirectory()
-                        .getPath() + "/imageloader/Cache";
+                        .getPath() ;
 //                String imageName = SharedPreferencesDB.getInstance(this).getString("userId", "0")
 //                        + ".jpg";
                 File f = new File(imageDir, "study.jpg");
@@ -553,11 +555,12 @@ public class WritePersonMessageActivity extends Activity implements View.OnClick
     private void upPhoto(File f) {
         dialogViewPhoto.show();
         dialogViewPhoto.setMessage("头像上传中...");
+        Map<String, String> map = new HashMap();
+        map.put("enctype", "multipart/form-data");
         OkHttpUtils.post()
                 .addFile("img", "userimg.jpg", f)
                 .url(Config.UP_FILE)
-                .params(null)
-                .headers(null)
+                .headers(map)
                 .build()
                 .execute(new StringCallback() {
                     @Override
