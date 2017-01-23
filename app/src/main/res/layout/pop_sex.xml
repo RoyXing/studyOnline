@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:weightSum="2"
+    android:background="@drawable/pop_sex_bg">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/btn_pop_sex"
+        android:id="@+id/rel_sex_m">
+        <TextView
+            android:id="@+id/tv_m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="男"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    <ImageView
+        android:id="@+id/sex_img1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pop_sex_ok"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_m"
+        android:visibility="invisible"
+        android:layout_toStartOf="@+id/tv_m" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/btn_pop_sex"
+        android:gravity="center_vertical"
+        android:id="@+id/rel_sex_w">
+        <TextView
+            android:id="@+id/tv_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="女"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/sex_img2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pop_sex_ok"
+        android:visibility="invisible"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/tv_w"
+        android:layout_toStartOf="@+id/tv_w" />
+
+    </RelativeLayout>
+
+</LinearLayout>

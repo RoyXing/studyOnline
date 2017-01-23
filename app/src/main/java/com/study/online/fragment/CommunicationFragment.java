@@ -20,6 +20,7 @@ import com.study.online.bean.TopicBean;
 import com.study.online.config.Config;
 import com.study.online.utils.DialogView;
 import com.study.online.utils.JsonToBean;
+import com.study.online.utils.SharedPreferencesDB;
 import com.study.online.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -50,6 +51,9 @@ public class CommunicationFragment extends BaseFragment {
     public DialogView dialogView;
     int page = 0;
     int positon;//点击的位置
+    int how;//那个界面，界面传过来的；
+    String urls = "";//多个界面，根据how动态改变url
+    String userid = "";//需要传送的userid
 
     @Nullable
     @Override
@@ -70,6 +74,31 @@ public class CommunicationFragment extends BaseFragment {
         listView.setAdapter(adapter);
         listView.addFooterView(footview);
         listener();
+        getHow();
+    }
+
+    //根据过来的界面加以处理
+    private void getHow() {
+        how = getArguments().getInt("how");
+        switch (how) {
+            //我的发帖
+            case 0:
+                urls = Config.MY_WRITE;
+                write.setVisibility(View.GONE);
+                userid = SharedPreferencesDB.getInstance(getActivity()).getString("userid", "");
+                break;
+            //与我相关
+            case 1:
+                urls = Config.MY_COMMINT;
+                write.setVisibility(View.GONE);
+                userid = SharedPreferencesDB.getInstance(getActivity()).getString("userid", "");
+                break;
+            //话题列表
+            case 2:
+                urls = Config.TOPIC_LIST;
+                userid = "";
+                break;
+        }
         getList();
     }
 
@@ -112,54 +141,100 @@ public class CommunicationFragment extends BaseFragment {
     }
 
     /**
-     * 进行数据上传
+     * 进行数据下载,用于我的发帖和与我相关,else是帖子列表
      */
     private void getList() {
         dialogView = new DialogView(getActivity());
         dialogView.show();
         dialogView.setMessage("贴子加载中...");
-        OkHttpUtils
-                .post()
-                .url(Config.TOPIC_LIST)
-                .addParams("page", page + "")
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        ToastUtils.show(getActivity(), e.toString());
-                        if (dialogView != null)
-                            dialogView.close();
-                        refreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
-                                List<TopicBean> topicBeanList = JsonToBean.getBeans(jsonObject.opt("response").toString(), TopicBean.class);
-                                listView.removeFooterView(footview);
-                                if (page == 0)
-                                    list.clear();
-                                if (topicBeanList.size() >= 10) {
-                                    page++;
-                                    listView.addFooterView(footview);
-                                } else {
-                                    listView.removeFooterView(footview);
-                                }
-                                list.addAll(topicBeanList);
-                                adapter.notifyDataSetChanged();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
+        if (how == 0 || how == 1) {
+            OkHttpUtils
+                    .post()
+                    .url(urls)
+                    .addParams("page", page + "")
+                    .addParams("userId", userid)
+                    .build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            ToastUtils.show(getActivity(), e.toString());
+                            if (dialogView != null)
+                                dialogView.close();
+                            refreshLayout.setRefreshing(false);
                         }
-                        refreshLayout.setRefreshing(false);
-                        if (dialogView != null)
-                            dialogView.close();
 
-                    }
+                        @Override
+                        public void onResponse(String response, int id) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                    List<TopicBean> topicBeanList = JsonToBean.getBeans(jsonObject.opt("response").toString(), TopicBean.class);
+                                    listView.removeFooterView(footview);
+                                    if (page == 0)
+                                        list.clear();
+                                    if (topicBeanList.size() >= 10) {
+                                        page++;
+                                        listView.addFooterView(footview);
+                                    } else {
+                                        listView.removeFooterView(footview);
+                                    }
+                                    list.addAll(topicBeanList);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            refreshLayout.setRefreshing(false);
+                            if (dialogView != null)
+                                dialogView.close();
 
-                });
+                        }
+
+                    });
+        } else {
+            OkHttpUtils
+                    .post()
+                    .url(urls)
+                    .addParams("page", page + "")
+                    .build()
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            ToastUtils.show(getActivity(), e.toString());
+                            if (dialogView != null)
+                                dialogView.close();
+                            refreshLayout.setRefreshing(false);
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                    List<TopicBean> topicBeanList = JsonToBean.getBeans(jsonObject.opt("response").toString(), TopicBean.class);
+                                    listView.removeFooterView(footview);
+                                    if (page == 0)
+                                        list.clear();
+                                    if (topicBeanList.size() >= 10) {
+                                        page++;
+                                        listView.addFooterView(footview);
+                                    } else {
+                                        listView.removeFooterView(footview);
+                                    }
+                                    list.addAll(topicBeanList);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            refreshLayout.setRefreshing(false);
+                            if (dialogView != null)
+                                dialogView.close();
+
+                        }
+
+                    });
+        }
     }
 
 

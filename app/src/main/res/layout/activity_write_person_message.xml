@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/for_photo">
+
+    <include layout="@layout/title_toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.study.online.view.RoundImageView
+            android:id="@+id/userimg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/icon" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray3"/>
+    <RelativeLayout
+        android:id="@+id/lay_unickname"
+        android:layout_width="fill_parent"
+        android:paddingRight="5dp"
+        android:background="@drawable/center_item_selector"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/UserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="姓名" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            style="@style/EditUserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/x"
+            android:text="易学" />
+        <ImageView
+            android:id="@+id/x"
+            style="@style/Add20HuabiTheme"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person_listview_go"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/gray3"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray3"/>
+    <RelativeLayout
+        android:id="@+id/lay_sex"
+        android:layout_width="fill_parent"
+        android:paddingRight="5dp"
+        android:background="@drawable/center_item_selector"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/UserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="性别" />
+
+        <TextView
+            android:id="@+id/tv_sex"
+            style="@style/EditUserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/s"
+            android:text="男" />
+        <ImageView
+            android:id="@+id/s"
+            style="@style/Add20HuabiTheme"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person_listview_go"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/gray3"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray3"/>
+    <RelativeLayout
+        android:id="@+id/lay_birth"
+        android:layout_width="fill_parent"
+        android:paddingRight="5dp"
+        android:background="@drawable/center_item_selector"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/UserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生日" />
+
+        <TextView
+            android:id="@+id/tv_birth"
+            style="@style/EditUserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/b"
+            android:text="" />
+        <ImageView
+            android:id="@+id/b"
+            style="@style/Add20HuabiTheme"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person_listview_go"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/gray3"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray3"/>
+    <RelativeLayout
+        android:id="@+id/lay_study_accout"
+        android:layout_width="fill_parent"
+        android:paddingRight="5dp"
+        android:background="@drawable/center_item_selector"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/UserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学号" />
+
+        <TextView
+            android:id="@+id/tv_study_account"
+            style="@style/EditUserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/a"
+            android:text="121007121" />
+        <ImageView
+            android:id="@+id/a"
+            style="@style/Add20HuabiTheme"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person_listview_go"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/gray3"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray3"/>
+    <RelativeLayout
+        android:id="@+id/lay_study_major"
+        android:layout_width="fill_parent"
+        android:paddingRight="5dp"
+        android:background="@drawable/center_item_selector"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/UserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="专业" />
+
+        <TextView
+            android:id="@+id/tv_study_major"
+            style="@style/EditUserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_a"
+            android:text="计算机科学与技术" />
+        <ImageView
+            android:id="@+id/tv_a"
+            style="@style/Add20HuabiTheme"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person_listview_go"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/gray3"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray3"/>
+    <RelativeLayout
+        android:id="@+id/lay_study_department"
+        android:layout_width="fill_parent"
+        android:paddingRight="5dp"
+        android:background="@drawable/center_item_selector"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/UserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学院" />
+
+        <TextView
+            android:id="@+id/tv_study_department"
+            style="@style/EditUserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/tv_aa"
+            android:text="计算机" />
+        <ImageView
+            android:id="@+id/tv_aa"
+            style="@style/Add20HuabiTheme"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person_listview_go"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/gray3"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/gray3"/>
+    <RelativeLayout
+        android:id="@+id/lay_password"
+        android:layout_width="fill_parent"
+        android:paddingRight="5dp"
+        android:background="@drawable/center_item_selector"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            style="@style/UserinfoTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码修改" />
+
+        <ImageView
+            style="@style/Add20HuabiTheme"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/person_listview_go"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/gray3"/>
+</LinearLayout>

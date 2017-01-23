@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         slide_listView = (ListView) findViewById(R.id.slide_listview);
         slide_btnExit = (ActionProcessButton) findViewById(R.id.slide_btn_exit);
         slide_head = (RelativeLayout) findViewById(R.id.slid_head);
-        Picasso.with(this).load(SharedPreferencesDB.getInstance(this).getString("userimgae", "")).placeholder(R.drawable.icon).error(R.drawable.icon).into(slide_head_image);
+        Picasso.with(this).load(SharedPreferencesDB.getInstance(this).getString("userimgae", "null")).placeholder(R.drawable.icon).error(R.drawable.icon).into(slide_head_image);
         slide_head_name.setText(SharedPreferencesDB.getInstance(this).getString("username", "易学"));
     }
 
@@ -110,7 +110,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         slide_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtils.show(MainActivity.this, slideMenuItemList.get(position).getItme_text());
+                switch (position) {
+                    case 0:
+                        Intent myWrite = new Intent(MainActivity.this, MyWriteAndMyCommitActivity.class);
+                        myWrite.putExtra("my", "0");
+                        startActivity(myWrite);
+                        break;
+                    case 1:
+                        Intent myCommit = new Intent(MainActivity.this, MyWriteAndMyCommitActivity.class);
+                        myCommit.putExtra("my", "1");
+                        startActivity(myCommit);
+                        break;
+                    case 2:
+                        Intent about = new Intent(MainActivity.this, AboutActivity.class);
+                        startActivity(about);
+                        break;
+                }
             }
         });
     }
@@ -120,7 +135,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new StudyFragment());
         fragments.add(new ResourceFragment());
-        fragments.add(new CommunicationFragment());
+        //此处为了加以利用fragment，此处添加标识，因为在我的发帖和与我相关都要用到此fragment，以此达到复用
+        Bundle bundle = new Bundle();
+        bundle.putInt("how", 2);
+        CommunicationFragment communicationFragment = new CommunicationFragment();
+        communicationFragment.setArguments(bundle);
+        fragments.add(communicationFragment);
 
         mController = FragmentController.getInstance(this, R.id.ui_container, fragments);
         mController.showFragments(0);
@@ -176,6 +196,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Picasso.with(MainActivity.this).load(SharedPreferencesDB.getInstance(MainActivity.this).getString("userimgae", "null")).placeholder(R.drawable.icon).error(R.drawable.icon).into(slide_head_image);
+        slide_head_name.setText(SharedPreferencesDB.getInstance(MainActivity.this).getString("username", "易学"));
+    }
 
     @Override
     public void onBackPressed() {
@@ -193,7 +219,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         switch (v.getId()) {
             //切换头像
             case R.id.slide_userimg:
-                ToastUtils.show(MainActivity.this, "切换头像");
+                Intent person = new Intent(MainActivity.this, WritePersonMessageActivity.class);
+                startActivity(person);
                 break;
             //退出当前账号
             case R.id.slide_btn_exit:
@@ -213,15 +240,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private void dataForlist() {
         slideMenuItemList = new ArrayList<>();
         SlideMenuItem p1 = new SlideMenuItem("我的发帖", R.drawable.write_me);
-        SlideMenuItem p2 = new SlideMenuItem("关于我们", R.drawable.us);
-        // PersonCenterItem p3 = new PersonCenterItem("我的账户", R.drawable.person_listview_mywallet);
-        SlideMenuItem p4 = new SlideMenuItem("还有什么", R.drawable.us);
-        SlideMenuItem p5 = new SlideMenuItem("意见反馈", R.drawable.us);
+        SlideMenuItem p2 = new SlideMenuItem("与我相关", R.drawable.about_me);
+        SlideMenuItem p3 = new SlideMenuItem("关于我们", R.drawable.us);
+
         slideMenuItemList.add(p1);
         slideMenuItemList.add(p2);
-        //personCenterItemList.add(p3);
-        slideMenuItemList.add(p4);
-        slideMenuItemList.add(p5);
+        slideMenuItemList.add(p3);
         adapter = new SlideMenuAdapter(this, R.layout.item_person_center, slideMenuItemList);
         slide_listView.setAdapter(adapter);
     }

@@ -177,4 +177,17 @@
     <color name="holo_orange_light">#ffffbb33</color>
     <color name="holo_red_light">#ffff4444</color>
     <color name="gray">#337C7C7C</color>
+    <color name="all_bg_white">#efeff4</color>
+    <!-- 淡灰色 -->
+    <color name="btn_press">#aaffffff</color>
+    <color name="btn_press_false">#00000000</color>
+    <!-- 深灰色 -->
+    <color name="gray1">#5c615d</color>
+    <!-- 灰色 -->
+    <color name="gray2">#949393</color>
+    <!-- 淡灰色 -->
+    <color name="gray3">#CCCCCC</color>
+    <!-- 淡淡灰色 -->
+    <color name="gray4">#e5e5e5</color>
+    <color name="record_common_layout_border">#a0a0a0</color>
 </resources>

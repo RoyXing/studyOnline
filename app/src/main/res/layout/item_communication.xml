@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/transparent_20"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/article_title"
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/transparent_20"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -29,6 +29,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/icon" />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="5dp"

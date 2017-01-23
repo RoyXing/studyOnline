@@ -14,6 +14,51 @@ public class UserBean implements Serializable {
     private String phone;
     private String password;
     private String icon;
+    private String sex;
+    private String birthday;
+    private String college;
+    private String majoy;
+    private String studentId;
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getCollege() {
+        return college;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getMajoy() {
+        return majoy;
+    }
+
+    public void setMajoy(String majoy) {
+        this.majoy = majoy;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
 
     public String getId() {
         return id;
