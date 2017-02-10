@@ -31,21 +31,24 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="type"
-                android:textColor="@color/red" />
+                android:textColor="@color/red"
+                android:visibility="gone" />
 
         </RelativeLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/transparent_20"
             android:visibility="visible" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginRight="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp">
 
             <ImageView
                 android:id="@+id/source_image"
@@ -60,9 +63,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:minHeight="100dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/source_image"
+                android:minHeight="100dp"
                 android:text="11111111111111111111111111111111111111111111111111111111111"
                 android:textColor="@color/transparent_60" />
 

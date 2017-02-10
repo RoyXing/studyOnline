@@ -1,0 +1,12 @@
+1.图片加载库picasso，相关介绍链接：https://github.com/square/picasso（github官方地址）http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/0731/1639.html（博客介绍）
+2.网络加载库OkHttp，项目中用的是二次封装后的库http://blog.csdn.net/lmj623565791/article/details/49734867/（博客地址）https://github.com/hongyangAndroid/okhttputils（github地址）
+3.学习界面布局recyclerview的使用该控件为官方控件使用方法：http://blog.csdn.net/lmj623565791/article/details/45059587
+4.服务端数据解析Gson解析http://blog.csdn.net/kongzhichen/article/details/10135051
+5.资源布局CardView listview的使用
+6.侧滑 官方控件：http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/0925/1713.html
+7.下拉刷新官方控件：http://blog.csdn.net/lmj623565791/article/details/24521483/
+8.选项卡切换官方控件TabLayout：http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0731/3247.html
+9.登录 注册的按钮为自定义view http://blog.csdn.net/u012372365/article/details/52459468
+10.title为官方控件ToolBar：http://www.codeceo.com/article/android-toolbar-develop.html
+11.主页左上角图标切换官方控件 ActionBarDrawerToggle：http://blog.sina.com.cn/s/blog_3e8528960102w2vy.html
+12.底部选项卡 BottomNavigationView：http://www.jianshu.com/p/2bd1d1f35465

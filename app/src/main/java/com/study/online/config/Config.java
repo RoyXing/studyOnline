@@ -44,8 +44,10 @@ public class Config {
     public static String UP_PERSON_MESSAGE = URL + "/user/update";
 
     //我的发帖
-    public static String MY_WRITE=URL+"/topic/list";
+    public static String MY_WRITE = URL + "/topic/list";
 
     //与我相关
-    public static String MY_COMMINT=URL+"/topic/join";
+    public static String MY_COMMINT = URL + "/topic/join";
+
+    public static String STUDY_DESC = URL + "/typedesc";
 }

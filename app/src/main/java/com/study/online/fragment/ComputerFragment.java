@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,14 +62,15 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     private void initEvent() {
-        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean>());
+        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean>(), "");
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         computer_recyclerview.setLayoutManager(layoutManager);
         computer_recyclerview.setAdapter(mAdapter);
         computer_recyclerview.setScrollBarStyle(View.SCROLLBARS_INSIDE_INSET);
         computer_refresh.setOnRefreshListener(this);
         mAdapter.setOnItemClickListener(this);
-        listbean=new ArrayList<>();
+        listbean = new ArrayList<>();
+        getDesc();
         getData();
         computer_recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -89,12 +91,14 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
     }
+
     protected boolean isSlideToBottom(RecyclerView recyclerView) {
         if (recyclerView == null) return false;
         if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset() >= recyclerView.computeVerticalScrollRange())
             return true;
         return false;
     }
+
     private void getData() {
         OkHttpUtils.post().url(Config.COURSE_LIST)
                 .addParams("type", "计算机课程")
@@ -113,13 +117,13 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
                                 List<KnowledgeBean> list = JsonToBean.getBeans(jsonObject.optString("response"), KnowledgeBean.class);
-                                if (currentPage==0)
+                                if (currentPage == 0)
                                     listbean.clear();
-                                if (list.size()>=10){
+                                if (list.size() >= 10) {
                                     currentPage++;
-                                    loadMore=true;
-                                }else {
-                                    loadMore=false;
+                                    loadMore = true;
+                                } else {
+                                    loadMore = false;
                                 }
                                 listbean.addAll(list);
                                 mAdapter.setData(listbean);
@@ -133,10 +137,38 @@ public class ComputerFragment extends BaseFragment implements SwipeRefreshLayout
                 });
     }
 
+    private void getDesc() {
+        OkHttpUtils.post().url(Config.STUDY_DESC)
+                .addParams("name", "计算机课程")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e("roy", "desc" + response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                JSONObject info = jsonObject.getJSONObject("response");
+                                String desc = info.optString("desc");
+                                mAdapter.setDescription(desc);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onRefresh() {
-        currentPage=0;
+        currentPage = 0;
         getData();
+        getDesc();
     }
 
     @Override

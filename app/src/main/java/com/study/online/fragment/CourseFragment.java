@@ -14,20 +14,16 @@ import android.widget.TextView;
 
 import com.study.online.R;
 import com.study.online.activity.CourseDetailActivity;
-import com.study.online.activity.MainActivity;
 import com.study.online.adapter.CourseRecyclerAdapter;
 import com.study.online.bean.KnowledgeBean;
 import com.study.online.config.Config;
 import com.study.online.utils.JsonToBean;
-import com.study.online.utils.ToastUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +62,7 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
     }
 
     private void initEvent() {
-        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean>());
+        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean>(), "");
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         course_recyclerview.setLayoutManager(layoutManager);
         course_recyclerview.setAdapter(mAdapter);
@@ -74,6 +70,7 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
         course_refresh.setOnRefreshListener(this);
         mAdapter.setOnItemClickListener(this);
         listbean = new ArrayList<>();
+        getDesc();
         getData();
         course_recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -93,6 +90,33 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
 
             }
         });
+    }
+
+    private void getDesc() {
+        OkHttpUtils.post().url(Config.STUDY_DESC)
+                .addParams("name", "课程介绍")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e("roy", "desc" + response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                JSONObject info = jsonObject.getJSONObject("response");
+                                String desc = info.optString("desc");
+                                mAdapter.setDescription(desc);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
     protected boolean isSlideToBottom(RecyclerView recyclerView) {
@@ -118,6 +142,7 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
                     public void onResponse(String response, int id) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
+                            Log.e("roy", jsonObject.toString());
                             if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
                                 List<KnowledgeBean> list = JsonToBean.getBeans(jsonObject.optString("response"), KnowledgeBean.class);
                                 if (currentPage == 0)
@@ -144,6 +169,7 @@ public class CourseFragment extends BaseFragment implements SwipeRefreshLayout.O
     public void onRefresh() {
         currentPage = 0;
         getData();
+        getDesc();
     }
 
     @Override

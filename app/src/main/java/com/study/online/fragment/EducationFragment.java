@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class EducationFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     private void initEvent() {
-        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean>());
+        mAdapter = new CourseRecyclerAdapter(getActivity(), new ArrayList<KnowledgeBean>(),"");
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         education_recyclerview.setLayoutManager(layoutManager);
         education_recyclerview.setAdapter(mAdapter);
@@ -68,6 +69,7 @@ public class EducationFragment extends BaseFragment implements SwipeRefreshLayou
         education_refresh.setOnRefreshListener(this);
         mAdapter.setOnItemClickListener(this);
         listbean=new ArrayList<>();
+        getDesc();
         getData();
         education_recyclerview.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -132,10 +134,38 @@ public class EducationFragment extends BaseFragment implements SwipeRefreshLayou
                 });
     }
 
+    private void getDesc() {
+        OkHttpUtils.post().url(Config.STUDY_DESC)
+                .addParams("name", "教育课程")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e("roy", "desc" + response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.optInt("code") == 10000 && jsonObject.optString("info").equals("success")) {
+                                JSONObject info = jsonObject.getJSONObject("response");
+                                String desc = info.optString("desc");
+                                mAdapter.setDescription(desc);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onRefresh() {
         currentPage=0;
         getData();
+        getDesc();
     }
 
     @Override

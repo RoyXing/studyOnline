@@ -62,7 +62,8 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
 
         course_dictionary.setText(dictionary);
         course_name.setText(name);
-        Picasso.with(this).load(course.getImages()).into(image_course);
+        if (!course.getImages().isEmpty())
+            Picasso.with(this).load(course.getImages()).into(image_course);
         course_author.setText("作者：" + course.getAuthor());
         course_publishing.setText("出版社：" + course.getPublishing());
         course_desc.setText(course.getDesc());

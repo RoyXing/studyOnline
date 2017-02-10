@@ -12,6 +12,9 @@ import com.study.online.utils.ToastUtils;
 import com.study.online.view.TitleView;
 import com.study.online.view.button.ActionProcessButton;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by roy on 2017/1/15.
  */
@@ -60,13 +63,54 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
 //                register_nickname.setEnabled(false);
 //                register_account.setEnabled(false);
 //                register_password.setEnabled(false);
-                progressGenerator.register(this, register_nickname.getText().toString(), register_account.getText().toString(), register_password.getText().toString());
+                String password = register_password.getText().toString();
+                if (isPasswLength(password) && isPassword(password)) {
+                    progressGenerator.register(this, register_nickname.getText().toString(), register_account.getText().toString(), password);
+                } else {
+                    ToastUtils.show(this, "密码应同时包含数字和字母并且长度为8-15位");
+                }
+
                 break;
             case R.id.title_back:
                 finish();
                 break;
         }
     }
+
+    /**
+     * 验证输入密码长度 (6-18位)
+     *
+     * @param str 待验证的字符串
+     * @return 如果是符合格式的字符串, 返回 <b>true </b>,否则为 <b>false </b>
+     */
+    public static boolean isPasswLength(String str) {
+        String regex = "^\\d{8,15}$";
+        return match(regex, str);
+    }
+
+
+    /**
+     * 验证输入密码条件(字符与数据同时出现)
+     *
+     * @param str 待验证的字符串
+     * @return 如果是符合格式的字符串, 返回 <b>true </b>,否则为 <b>false </b>
+     */
+    public static boolean isPassword(String str) {
+        String regex = "[A-Za-z]+[0-9]";
+        return match(regex, str);
+    }
+
+    /**
+     * @param regex 正则表达式字符串
+     * @param str   要匹配的字符串
+     * @return 如果str 符合 regex的正则表达式格式,返回true, 否则返回 false;
+     */
+    private static boolean match(String regex, String str) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(str);
+        return matcher.matches();
+    }
+
 
     @Override
     public void onComplete() {
