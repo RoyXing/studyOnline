@@ -64,7 +64,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
 //                register_account.setEnabled(false);
 //                register_password.setEnabled(false);
                 String password = register_password.getText().toString();
-                if (isPasswLength(password) && isPassword(password)) {
+                if (isRightPassword(password)) {
                     progressGenerator.register(this, register_nickname.getText().toString(), register_account.getText().toString(), password);
                 } else {
                     ToastUtils.show(this, "密码应同时包含数字和字母并且长度为8-15位");
@@ -77,17 +77,6 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
         }
     }
 
-    /**
-     * 验证输入密码长度 (6-18位)
-     *
-     * @param str 待验证的字符串
-     * @return 如果是符合格式的字符串, 返回 <b>true </b>,否则为 <b>false </b>
-     */
-    public static boolean isPasswLength(String str) {
-        String regex = "^\\d{8,15}$";
-        return match(regex, str);
-    }
-
 
     /**
      * 验证输入密码条件(字符与数据同时出现)
@@ -95,8 +84,8 @@ public class RegisterActivity extends Activity implements View.OnClickListener, 
      * @param str 待验证的字符串
      * @return 如果是符合格式的字符串, 返回 <b>true </b>,否则为 <b>false </b>
      */
-    public static boolean isPassword(String str) {
-        String regex = "[A-Za-z]+[0-9]";
+    public static boolean isRightPassword(String str) {
+        String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,15}$";
         return match(regex, str);
     }
 
