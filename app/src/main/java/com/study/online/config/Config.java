@@ -11,7 +11,7 @@ import com.study.online.view.button.ProcessButton;
 
 public class Config {
     //主URL
-    private static String URL = "http://115.159.100.155:8080/courseteach";
+    private static String URL = "http://123.206.73.25:8080/courseteach";
 
     //注册接口
     public static String RIGISTER = URL + "/user/rigister";

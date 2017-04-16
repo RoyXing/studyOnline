@@ -1,6 +1,7 @@
 package com.study.online.activity;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.squareup.picasso.Picasso;
 import com.study.online.R;
 import com.study.online.bean.KnowledgeBean;
 import com.study.online.view.TitleView;
+import com.study.online.view.VideoView;
 
 /**
  * Created by roy on 2017/1/16.
@@ -26,6 +28,7 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
     private TextView course_name;
     private TextView course_dictionary;
     private TitleView toolbar;
+    private VideoView videoView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
         course_name = (TextView) findViewById(R.id.course_name);
         course_dictionary = (TextView) findViewById(R.id.course_dictionary);
         toolbar = (TitleView) findViewById(R.id.toolbar);
+        videoView = (VideoView) findViewById(R.id.videoView);
     }
 
     private void initEvent() {
@@ -68,6 +72,15 @@ public class CourseDetailActivity extends Activity implements View.OnClickListen
         course_publishing.setText("出版社：" + course.getPublishing());
         course_desc.setText(course.getDesc());
         course_content.setText(course.getContent());
+
+        String url = course.getVideo() + "";
+        if (url.isEmpty() || url.equals("null"))
+            videoView.setVideoURI(Uri.parse("http://www.w3school.com.cn/example/html5/mov_bbb.mp4"));
+        else
+            videoView.setVideoURI(Uri.parse(course.getVideo()));
+
+        videoView.setMediaController(new android.widget.MediaController(this));
+        videoView.start();
     }
 
     @Override

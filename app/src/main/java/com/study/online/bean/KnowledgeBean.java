@@ -32,6 +32,7 @@ public class KnowledgeBean implements Serializable {
     private String desc;
     private String content;
     private String images;
+    private String video;
 
     public int getId() {
         return id;
@@ -113,9 +114,17 @@ public class KnowledgeBean implements Serializable {
         this.images = images;
     }
 
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
+
     @Override
     public String toString() {
-        return "ResponseBean{" +
+        return "KnowledgeBean{" +
                 "id=" + id +
                 ", courseId='" + courseId + '\'' +
                 ", type='" + type + '\'' +
@@ -126,7 +135,7 @@ public class KnowledgeBean implements Serializable {
                 ", desc='" + desc + '\'' +
                 ", content='" + content + '\'' +
                 ", images='" + images + '\'' +
+                ", video='" + video + '\'' +
                 '}';
     }
-
 }
